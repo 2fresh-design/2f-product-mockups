@@ -37,6 +37,7 @@
                 font-weight: 400;
                 line-height: 1.5;
                 -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
             }
             section[id] {
                 scroll-margin-top: 2rem;
@@ -379,6 +380,116 @@
                 z-index: 100;
                 pointer-events: none;
             }
+
+            /* ============================================
+               Responsive — tablet & mobile
+               ============================================ */
+            @media (max-width: 768px) {
+                .wrap {
+                    padding: 2rem 1.5rem;
+                }
+
+                /* Nav: stack logo nad linky */
+                .nav-top {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 1.2rem;
+                    padding-bottom: 2rem;
+                }
+                .nav-links {
+                    flex-wrap: wrap;
+                    gap: 1.2rem;
+                }
+
+                /* Hero */
+                .hero {
+                    padding: 3rem 0 2rem;
+                }
+                h1 {
+                    font-size: 2.4rem;
+                    max-width: 100%;
+                }
+                .sub {
+                    font-size: 1.05rem;
+                    margin-bottom: 2rem;
+                }
+                .cta-row {
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 0.8rem;
+                }
+                .cta-primary {
+                    text-align: center;
+                    width: 100%;
+                }
+                .cta-secondary {
+                    text-align: center;
+                    padding: 0.5rem;
+                }
+
+                /* Sekce */
+                section {
+                    padding: 2.5rem 0;
+                }
+                h2 {
+                    font-size: 1.7rem;
+                    max-width: 100%;
+                    margin-bottom: 1.5rem;
+                }
+
+                /* Gridy → jeden sloupec */
+                .steps {
+                    grid-template-columns: 1fr;
+                }
+                .inside-grid {
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                }
+                .pricing-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                /* Final CTA */
+                .final-cta {
+                    padding: 3rem 1.5rem;
+                    margin-top: 2.5rem;
+                }
+                .final-cta h2 {
+                    font-size: 1.6rem;
+                }
+
+                /* Footer stack */
+                footer {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    align-items: flex-start;
+                    padding: 2rem 0 1rem;
+                }
+
+                /* Mockup ribbon na mobilu skrýt — neúměrně velký */
+                .ribbon {
+                    display: none;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .wrap {
+                    padding: 1.5rem 1rem;
+                }
+                h1 {
+                    font-size: 2rem;
+                }
+                .hero {
+                    padding: 2rem 0 1.5rem;
+                }
+                .step,
+                .price-cell {
+                    padding: 1.5rem;
+                }
+                .price-cell .amount {
+                    font-size: 1.8rem;
+                }
+            }
         </style>
     </head>
     <body>
@@ -410,8 +521,10 @@
                     Na míru. Přesně podle vašich potřeb.
                 </p>
                 <div class="cta-row">
-                    <a class="cta-primary" href="#kontakt">Chci designery</a>
-                    <a class="cta-secondary" href="#jak-to-funguje">Jak to funguje?</a>
+                    <a class="cta-primary" href="#kontakt">Chci designery →</a>
+                    <a class="cta-secondary" href="#jak-to-funguje"
+                        >Jak to funguje?</a
+                    >
                 </div>
             </section>
 
@@ -600,7 +713,11 @@
                     První brief je zdarma. Pokud se z tří profilů ani jeden
                     netrefí, neplatíte nic.
                 </p>
-                <a class="cta-primary" href="mailto:hello@2fresh.cz?subject=2F%20Product%20%E2%80%94%20m%C3%A1m%20z%C3%A1jem&body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20v%C3%A1%C5%A1%20concept%20pre-vetting%20slu%C5%BEby%20pro%20designery%20a%20r%C3%A1d%20bych%20si%20promluvil%20o%20tom%2C%20jak%20by%20to%20mohlo%20fungovat%20u%20n%C3%A1s.%0A%0AD%C4%9Bkuji%2C%0A">Domluvit call →</a>
+                <a
+                    class="cta-primary"
+                    href="mailto:hello@2fresh.cz?subject=2F%20Product%20%E2%80%94%20m%C3%A1m%20z%C3%A1jem&body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20v%C3%A1%C5%A1%20concept%20pre-vetting%20slu%C5%BEby%20pro%20designery%20a%20r%C3%A1d%20bych%20si%20promluvil%20o%20tom%2C%20jak%20by%20to%20mohlo%20fungovat%20u%20n%C3%A1s.%0A%0AD%C4%9Bkuji%2C%0A"
+                    >Domluvit call →</a
+                >
             </div>
 
             <footer>
