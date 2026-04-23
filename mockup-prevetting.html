@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-vetted designéři pro váš tým — 2F Product</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --bg-alt: #F0EFEA;
+    --ink: #0D0D0D;
+    --ink-soft: #2E2E2E;
+    --muted: #8A8A85;
+    --pink: #FF77AA;
+    --pink-soft: #FFE0EE;
+    --rule: #0D0D0D1a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 4rem;
+  }
+
+  /* Header */
+  .nav-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 3rem;
+    border-bottom: 2px solid var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+  .logo { font-weight: 600; }
+  .logo .brand { color: var(--pink); }
+  .nav-links { display: flex; gap: 2rem; color: var(--muted); }
+
+  /* Hero */
+  .hero {
+    padding: 5rem 0 4rem;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--pink);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .eyebrow .dot { width: 8px; height: 8px; background: var(--pink); border-radius: 50%; }
+
+  h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    max-width: 18ch;
+    margin-bottom: 2rem;
+  }
+  h1 .hl {
+    background: var(--pink);
+    padding: 0 0.15em;
+  }
+
+  .sub {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 55ch;
+    margin-bottom: 3rem;
+  }
+
+  .cta-row { display: flex; gap: 1rem; align-items: center; }
+  .cta-primary {
+    background: var(--pink);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    padding: 0.9rem 1.8rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  .cta-primary:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
+  .cta-secondary {
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+    text-decoration: underline;
+    padding: 0.9rem 0.5rem;
+  }
+
+  /* Section */
+  section { padding: 4rem 0; border-top: 2px solid var(--ink); }
+  section:first-of-type { border-top: none; }
+
+  h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    max-width: 22ch;
+  }
+  h2 .it { font-style: italic; color: var(--pink); }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+
+  /* How it works — 3 steps */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .step {
+    padding: 2rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .step:nth-child(2) { background: var(--pink); }
+  .step .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .step .title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .step .desc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* What's inside */
+  .inside-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 1rem;
+  }
+  .inside-block h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    background: var(--pink);
+    padding: 0.3rem 0.6rem;
+    display: inline-block;
+  }
+  .inside-block ul { list-style: none; }
+  .inside-block li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.95rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  .inside-block li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--pink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+  }
+
+  /* Pricing */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .price-cell {
+    padding: 2rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .price-cell.featured { background: var(--pink); }
+  .price-cell .tier {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .price-cell .amount {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 2.2rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+  .price-cell .unit {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+  }
+  .price-cell .terms {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* FAQ */
+  .faq-item {
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .faq-a {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* Final CTA */
+  .final-cta {
+    padding: 5rem 3rem;
+    background: var(--pink);
+    border: 2px solid var(--ink);
+    text-align: center;
+    margin-top: 4rem;
+  }
+  .final-cta h2 {
+    margin: 0 auto 1.5rem;
+    max-width: 25ch;
+  }
+  .final-cta .sub {
+    color: var(--ink);
+    margin: 0 auto 2rem;
+    max-width: 50ch;
+  }
+  .final-cta .cta-primary { background: var(--ink); color: var(--pink); }
+
+  /* Footer */
+  footer {
+    padding: 3rem 0 1rem;
+    border-top: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+
+  /* Mockup ribbon */
+  .ribbon {
+    position: fixed;
+    top: 1.5rem;
+    right: -3rem;
+    background: var(--ink);
+    color: var(--pink);
+    padding: 0.3rem 4rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    transform: rotate(35deg);
+    z-index: 100;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon">MOCKUP · KONCEPT</div>
+
+<div class="wrap">
+
+  <nav class="nav-top">
+    <div class="logo"><span class="brand">2F</span> / Product</div>
+    <div class="nav-links">
+      <span>Jak to funguje</span>
+      <span>Cena</span>
+      <span>FAQ</span>
+      <span>Kontakt</span>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" style="border: none; padding-top: 5rem;">
+    <div class="eyebrow"><span class="dot"></span>Pre-vetted designéři</div>
+    <h1>Designéři, které nemusíte <span class="hl">proklepávat.</span></h1>
+    <p class="sub">Služba pro hiring lídry designérských týmů. Dodáme vám kandidáty s ověřenými kompetencemi — ne na papíře, ale ve stejném frameworku, který 2FRESH používá 15 let u vlastních designérů.</p>
+    <div class="cta-row">
+      <button class="cta-primary">Zaujalo mě — chci vědět víc →</button>
+      <a class="cta-secondary" href="#">Jak to funguje?</a>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section>
+    <div class="section-label">01 · Jak to funguje</div>
+    <h2>Tři kroky od poptávky po <span class="it">interview</span>.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <div class="title">Popíšete, koho hledáte</div>
+        <div class="desc">15 minut s našim design leadem. Ne generický JD — konkrétní kompetence, tým, projekt, kulturní fit.</div>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <div class="title">Dostanete 3 profily</div>
+        <div class="desc">Do 7 dnů. Každý s kompetenčním radarem, ukázkami procesu (ne jen designů), a krátkým videem od assessora.</div>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <div class="title">Pohovořujete jen relevantní</div>
+        <div class="desc">Žádných 120 CV. Tři lidé, kteří splňují brief. Když se netrefí, doděláme další kolo zdarma.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's inside -->
+  <section>
+    <div class="section-label">02 · Co dostanete</div>
+    <h2>Profil, který <span class="it">něco říká.</span></h2>
+    <div class="inside-grid">
+      <div class="inside-block">
+        <h3>V každém profilu</h3>
+        <ul>
+          <li>Kompetenční radar (12 dimenzí, 2FRESH framework)</li>
+          <li>Ukázky procesu, ne jen finální obrazovky</li>
+          <li>Video 3–5 min: jak kandidát přemýšlí nad reálným problémem</li>
+          <li>Notes od assessora — silné stránky, slepé skvrny, kulturní fit</li>
+          <li>Reference od dvou předchozích spolupracovníků</li>
+        </ul>
+      </div>
+      <div class="inside-block">
+        <h3>Co neděláme</h3>
+        <ul>
+          <li>Neposíláme masově — max 3 profily per brief</li>
+          <li>Nehodnotíme podle let nebo firem v CV</li>
+          <li>Neřešíme portfolio prezentaci — skill radar nahrazuje</li>
+          <li>Neděláme klasický headhunting — jdete za kompetencí, ne za značkou</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section>
+    <div class="section-label">03 · Cena</div>
+    <h2>Platíte jen za to, co <span class="it">reálně využijete.</span></h2>
+    <div class="pricing-grid">
+      <div class="price-cell">
+        <div class="tier">Single hire</div>
+        <div class="amount">25 000 Kč</div>
+        <div class="unit">/ jednorázově</div>
+        <div class="terms">Jedna pozice, 3 profily do 7 dnů, 1 dokolečko zdarma. Žádný závazek.</div>
+      </div>
+      <div class="price-cell featured">
+        <div class="tier">Retainer</div>
+        <div class="amount">15 000 Kč</div>
+        <div class="unit">/ měsíc</div>
+        <div class="terms">Průběžný přístup k poolu. Až 3 pozice měsíčně, prioritní dodání do 48 h. Pro týmy 10+ designérů.</div>
+      </div>
+      <div class="price-cell">
+        <div class="tier">Enterprise</div>
+        <div class="amount">—</div>
+        <div class="unit">poptávka</div>
+        <div class="terms">Integrovaná spolupráce, vlastní kompetenční framework, SLA. Pro týmy 30+ designérů.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-label">04 · FAQ</div>
+    <h2>Co se typicky <span class="it">ptají.</span></h2>
+    <div class="faq-item">
+      <div class="faq-q">Jak vetujete kandidáty?</div>
+      <div class="faq-a">Každý kandidát projde 90min assessment sessionem s jedním z našich senior assessorů. Session pokrývá design proces na reálném problému, kompetenční rozhovor a reference check. Framework je stejný, jaký 2FRESH používá 15 let pro vlastní tým.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Proč mám věřit tomu, jak vy vidíte kandidáta?</div>
+      <div class="faq-a">Nemusíte. Každý profil obsahuje syrové ukázky procesu + video. Vidíte, jak kandidát přemýšlí, ne jen jak prezentuje. Naše hodnocení je druhý názor, ne nahrazení vašeho.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Kdo jsou assessoři?</div>
+      <div class="faq-a">Seniorní designéři s 10+ lety praxe, kteří pro 2F Product dělají assessment jako side gig. Framework jim garantuje konzistenci napříč kandidáty.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Co když do týmu potřebuji někoho se specifickou domain zkušeností (banka, e-commerce…)?</div>
+      <div class="faq-a">Umíme vyvážit domain vs. přenositelné kompetence. Potřebujeme to vědět v první schůzce. Pokud je to strict dealbreaker, upozorníme, jaký trade-off tím zaplatíte v jiných rozměrech.</div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <div class="final-cta">
+    <h2 style="color: var(--ink);">Chcete si to ozkoušet na <span class="it" style="color: var(--ink); background: var(--bg); padding: 0 0.15em;">jedné pozici?</span></h2>
+    <p class="sub">První brief zadarmo. Pokud se z tří profilů ani jeden netrefí, neplatíte.</p>
+    <button class="cta-primary">Domluvit 15min call →</button>
+  </div>
+
+  <footer>
+    <span>2F Product · Designová agentura 2FRESH, Praha</span>
+    <span>MOCKUP V1 · 2026-04-24 · Nepoužívat veřejně</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
