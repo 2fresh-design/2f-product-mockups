@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2F Product — Demo Day update v2, 29. 4. 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --bg-alt: #F0EFEA;
+    --ink: #0D0D0D;
+    --ink-soft: #2E2E2E;
+    --muted: #8A8A85;
+    --pink: #FF77AA;
+    --pink-soft: #FFE0EE;
+    --rule: #0D0D0D1a;
+    --rule-strong: #0D0D0D;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 7vh 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    background: var(--bg);
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .sans { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+
+  .slide::before {
+    content: "2F / PRODUCT INITIATIVE · DEMO DAY · 2026-04-29";
+    position: absolute;
+    top: 3vh;
+    left: 4vw;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+  .slide::after {
+    content: attr(data-num);
+    position: absolute;
+    bottom: 3vh;
+    right: 4vw;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .eyebrow .dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    background: var(--pink);
+    border-radius: 50%;
+  }
+  .eyebrow .num {
+    color: var(--pink);
+    font-weight: 600;
+  }
+  .eyebrow .tag {
+    color: var(--muted);
+    font-weight: 500;
+    margin-left: 0.5rem;
+  }
+
+  .hl {
+    background-image: linear-gradient(180deg, transparent 0 18%, var(--pink) 18% 95%, transparent 95% 100%);
+    padding: 0 0.15em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  h1.display {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(3.5rem, 7.5vw, 7rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  h1.display .it { font-style: italic; color: var(--pink); }
+
+  h2.big {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(2.6rem, 5.5vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 22ch;
+  }
+  h2.big .it { font-style: italic; color: var(--pink); }
+
+  h3.mid {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(2.3rem, 4.2vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    max-width: 40ch;
+  }
+  h3.mid .it { font-style: italic; color: var(--pink); }
+
+  p.lead {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(1.05rem, 1.3vw, 1.35rem);
+    line-height: 1.5;
+    max-width: 58ch;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+  p.body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+  p.small {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* Cover */
+  .s-cover .stack { display: flex; flex-direction: column; gap: 1.8rem; }
+  .s-cover .hash {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--pink);
+    margin-bottom: 0.5rem;
+  }
+  .s-cover .rule-block {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .s-cover .rule-block .bar { height: 12px; width: 80px; background: var(--pink); }
+  .s-cover .rule-block .bar-sm { height: 12px; width: 28px; background: var(--ink); }
+  .s-cover .meta {
+    display: flex;
+    gap: 3.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--ink);
+    max-width: 900px;
+  }
+  .s-cover .meta > div { display: flex; flex-direction: column; gap: 0.3rem; }
+  .s-cover .meta .label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.05em; color: var(--muted); text-transform: uppercase; }
+  .s-cover .meta .val { font-size: 0.95rem; color: var(--ink); font-weight: 500; }
+
+  /* Combined Why + What slide (slide 2) */
+  .why-what {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 2rem;
+    max-width: 1200px;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .ww-cell {
+    padding: 1.8rem 1.6rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .ww-cell:nth-child(2) { background: var(--pink); }
+  .ww-cell .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .ww-cell .head {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1.7rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+  }
+  .ww-cell ul {
+    list-style: none;
+    margin-top: 0.5rem;
+  }
+  .ww-cell ul li {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--ink);
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  .ww-cell ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+  }
+  .ww-cell.center ul li::before { color: var(--ink); }
+
+  /* Quote slide */
+  .s-quote { padding: 7vh 10vw; }
+  .q-pull {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(2.2rem, 4.6vw, 4.2rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    max-width: 26ch;
+    color: var(--ink);
+    margin: 2vh 0 1vh 0;
+  }
+  .q-pull .hl { font-style: normal; }
+  .q-attr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--ink);
+    display: inline-block;
+    background: var(--pink);
+    padding: 0.4rem 0.7rem;
+    border-top: none;
+  }
+  .q-punch {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin-top: 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--rule);
+  }
+  .q-punch strong { color: var(--ink); font-weight: 600; }
+
+  /* Method intro slide */
+  .method-list {
+    list-style: none;
+    margin-top: 2.5rem;
+    max-width: 70ch;
+  }
+  .method-list li {
+    padding: 1.1rem 0;
+    border-top: 2px solid var(--ink);
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 2rem;
+    align-items: baseline;
+  }
+  .method-list li:last-child { border-bottom: 2px solid var(--ink); }
+  .method-list .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    background: var(--pink);
+    padding: 0.3rem 0.6rem;
+    display: inline-block;
+    color: var(--ink);
+    justify-self: start;
+  }
+  .method-list .txt {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.08rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* Closing */
+  .closing-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: end; }
+  .closing-big {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 3.6vw, 3.4rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .closing-big .it { font-style: italic; color: var(--pink); }
+  .closing-meta {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .closing-meta strong { color: var(--ink); font-weight: 600; }
+  .closing-meta .tag {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--ink);
+    padding: 0.3rem 0.6rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed;
+    bottom: 3vh;
+    left: 4vw;
+    display: flex;
+    gap: 0.3rem;
+    z-index: 10;
+  }
+  .nav button {
+    width: 34px;
+    height: 34px;
+    border: 2px solid var(--ink);
+    background: var(--bg);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .nav button:hover { background: var(--pink); }
+
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--pink);
+    transition: width 0.3s;
+    z-index: 10;
+  }
+
+  @media print {
+    @page { size: 1920px 1080px; margin: 0; }
+    html, body { overflow: visible; width: 1920px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .deck { height: auto; }
+    .slide {
+      opacity: 1 !important;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      width: 1920px;
+      height: 1080px;
+      inset: auto;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .slide:last-child { page-break-after: auto; }
+    .nav, .progress { display: none; }
+    .hl {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 10 10'><rect x='0' y='1.8' width='10' height='7.4' fill='%23FF77AA'/></svg>") !important;
+      background-size: 100% 100% !important;
+      background-repeat: no-repeat !important;
+      padding: 0 0.15em !important;
+    }
+    h1.display { line-height: 1.35 !important; }
+    h2.big { line-height: 1.3 !important; }
+    h3.mid { line-height: 1.3 !important; }
+    .q-pull { line-height: 1.3 !important; }
+    .closing-big { line-height: 1.3 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck">
+
+  <!-- 1: Cover -->
+  <section class="slide s-cover active" data-num="01 / 12">
+    <div class="stack">
+      <span class="hash">#demo-day · #building-in-public · №01</span>
+      <h1 class="display" style="font-size:clamp(2.6rem,5.2vw,5rem);">Pomáhat designérům<br>sehnat <span class="hl">job</span>.<br>Pomáhat organizacím<br>sehnat <span class="hl">designéry</span>.</h1>
+      <div class="rule-block"><div class="bar"></div><div class="bar-sm"></div></div>
+      <p class="lead" style="margin-top:1.5rem;">Update z product initiative — kde teď jsme po 8 hloubkových rozhovorech a co je nejzajímavější.</p>
+      <div class="meta">
+        <div><span class="label">Datum</span><span class="val">29. 4. 2026</span></div>
+        <div><span class="label">Fáze</span><span class="val">Pre-discovery</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2: Proč + Co stavíme -->
+  <section class="slide" data-num="02 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">01</span>&nbsp;&nbsp;PROČ &amp; CO STAVÍME</p>
+    <h2 class="big">Není to side project.<br>Je to <span class="hl">dlouhodobý směr</span>.</h2>
+    <div class="why-what">
+      <div class="ww-cell">
+        <div class="label">Proč</div>
+        <div class="head">Diverzifikace mimo agenturní byznys.</div>
+        <ul>
+          <li>Stavíme na svém — design, agentury, hiring.</li>
+          <li>Vychází z naší vlastní bolesti — i my hledáme designéry, i my je hodnotíme.</li>
+        </ul>
+      </div>
+      <div class="ww-cell">
+        <div class="label">Co</div>
+        <div class="head">Self-assessment + matchmaking pro designéry a firmy.</div>
+        <ul>
+          <li>Standardy hodnocení tam, kde žádné nejsou.</li>
+          <li>Pre-discovery — přesný tvar produktu ještě laďíme.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3: Jak — intro k důkazům -->
+  <section class="slide" data-num="03 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">02</span>&nbsp;&nbsp;JAK POSTUPUJEME</p>
+    <h2 class="big">8 rozhovorů.<br>Z každého <span class="hl">jeden moment</span>.</h2>
+    <p class="lead" style="margin-top:1.5rem;max-width:62ch;">Building in public. Evidence, ne intuice. Místo agregovaných závěrů ukážeme jedno konkrétní zjištění z každého rozhovoru — věc, která zůstala v hlavě i po debrífu.</p>
+    <ul class="method-list">
+      <li>
+        <span class="tag">VZOREK</span>
+        <span class="txt">Designéři, hiring manažeři, senior leadi. Anonymizováno — jen role, žádná jména a firmy.</span>
+      </li>
+      <li>
+        <span class="tag">METODA</span>
+        <span class="txt">~60–90 minut, přepis, kódování, syntéza napříč. 12 hypotéz v kill-or-go frameworku.</span>
+      </li>
+      <li>
+        <span class="tag">TON</span>
+        <span class="txt">Building in public. Sdílíme proces, ne jen výsledky. Ship within weeks, ne months.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 4: Citát 1 -->
+  <section class="slide s-quote" data-num="04 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">ROZHOVOR 1/8</span><span class="tag">#workaround</span></p>
+    <p class="q-pull">„Hodil jsem si inzerát a CV do <span class="hl">GPT</span> a povídal si s chatbotem. Řekl mi, na co jsem zapomněl."</p>
+    <span class="q-attr">Senior designer</span>
+    <p class="q-punch">Když firma neumí připravit kandidáta na pohovor, kandidát si pomůže AI. <strong>Hiring koučování se stěhuje k modelu, ne k firmě.</strong></p>
+  </section>
+
+  <!-- 5: Citát 2 -->
+  <section class="slide s-quote" data-num="05 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">ROZHOVOR 2/8</span><span class="tag">#standard</span></p>
+    <p class="q-pull">„Firmy mají jenom <span class="hl">dvě extrémní polohy</span> — buď se strašně doprošujou, nebo sednou na všechny a čekají."</p>
+    <span class="q-attr">Senior designer + bývalý hiring lead</span>
+    <p class="q-punch">Trh nemá střed. Buď přetlak, nebo podtlak. <strong>Strukturovaný proces uprostřed nikdo nemá.</strong></p>
+  </section>
+
+  <!-- 6: Citát 3 -->
+  <section class="slide s-quote" data-num="06 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">ROZHOVOR 3/8</span><span class="tag">#pain</span></p>
+    <p class="q-pull">„120 CV za dva týdny. Z těch by bylo relevantních 15. <span class="hl">Tohle už mohlo HR odfiltrovat</span> — ale nefiltrovalo se."</p>
+    <span class="q-attr">Hiring lead, malý korporátní design tým</span>
+    <p class="q-punch">HR jako administrativní průtok, ne partner. <strong>Lead screenuje sám, mezi schůzkami, ráno před devátou.</strong></p>
+  </section>
+
+  <!-- 7: Citát 4 -->
+  <section class="slide s-quote" data-num="07 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">ROZHOVOR 4/8</span><span class="tag">#pain</span></p>
+    <p class="q-pull">„Na těch obrázcích nikdo nepochopí, <span class="hl">jak přemýšlím</span>."</p>
+    <span class="q-attr">Mid-senior designerka po rodičovské pauze</span>
+    <p class="q-punch">Portfolio je broken artefakt. NDA, rodičák, zastaralé soubory — <strong>pro celé segmenty trhu strukturálně nedostupné.</strong></p>
+  </section>
+
+  <!-- 8: Citát 5 -->
+  <section class="slide s-quote" data-num="08 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">ROZHOVOR 5/8</span><span class="tag">#standard</span></p>
+    <p class="q-pull">„Vysázela mi do mřížky čísla z data narození a začala mi <span class="hl">číst charakteristiky</span>."</p>
+    <span class="q-attr">Junior researcherka, career switcher po 12 letech v IT</span>
+    <p class="q-punch">Numerologická mřížka jako hodnotící nástroj na pohovoru. <strong>Když chybí standard, sahá se po čemkoli.</strong></p>
+  </section>
+
+  <!-- 9: Citát 6 -->
+  <section class="slide s-quote" data-num="09 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">ROZHOVOR 6/8</span><span class="tag">#standard</span></p>
+    <p class="q-pull">„Jediný senior v týmu se stal <span class="hl">benchmarkem</span>, což je nesmysl."</p>
+    <span class="q-attr">Senior designerka + hiring lead</span>
+    <p class="q-punch">Když jeden člověk = standard celé firmy, je to chyba systému. <strong>Hodnocení relativně, ne podle kritérií.</strong></p>
+  </section>
+
+  <!-- 10: Citát 7 -->
+  <section class="slide s-quote" data-num="10 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">ROZHOVOR 7/8</span><span class="tag">#validace</span></p>
+    <p class="q-pull">„Na té case study poznáš, jak ta firma má <span class="hl">maturitu</span> nebo jak k tomu přistupuje."</p>
+    <span class="q-attr">Mid-level designer, účastník hiring panelů</span>
+    <p class="q-punch">Reverse matching — kandidát čte kvalitu firmy z kvality zadání. <strong>Generický brief = generický kandidát.</strong></p>
+  </section>
+
+  <!-- 11: Citát 8 -->
+  <section class="slide s-quote" data-num="11 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">ROZHOVOR 8/8</span><span class="tag">#validace</span></p>
+    <p class="q-pull">„Já CVčka nečtu. Skenuju 30 minut denně. <span class="hl">I nedokonalá AI by zvládla líp.</span>"</p>
+    <span class="q-attr">Lead velkého korporátního design týmu</span>
+    <p class="q-punch">Hiring manager s desítkami náborů za sebou explicitně říká: <strong>pre-vetting má hodnotu. I nedokonalý.</strong></p>
+  </section>
+
+  <!-- 12: Závěr -->
+  <section class="slide" data-num="12 / 12">
+    <p class="eyebrow"><span class="dot"></span>SHRNUTÍ &amp; CO DÁL</p>
+    <div class="closing-grid">
+      <div>
+        <p class="closing-big">Hiring designérů je <span class="it">rozbitý</span>.<br>A lidé si v té díře už dnes <span class="hl">staví workaroundy</span>.</p>
+        <p class="body" style="margin-top:2rem;max-width:55ch;">Investují do toho čas, aniž by je o to někdo žádal — vlastní kompetenční matice, spider charts, AI coach. <strong>To je výchozí bod produktu, který stavíme.</strong></p>
+      </div>
+      <div class="closing-meta">
+        <span class="tag">CO DÁL</span>
+        <p><strong>3 možné směry MVP:</strong> designer-first / B2B pre-vetting / hiring enablement.</p>
+        <p><strong>Co ještě nevíme:</strong> revenue model a primární zákazník — to rozhodneme s boardem.</p>
+        <p style="margin-top:1.4rem;"><strong>Next:</strong> ~5 dalších rozhovorů, prototyp místo hypotetické otázky, závěrečný report začátkem června.</p>
+        <p style="margin-top:1.6rem;color:var(--muted);font-size:0.85rem;">Building in public — pokud to chcete sledovat zblízka, ozvěte se. Otázky teď vítány.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Předchozí">←</button>
+  <button id="next" aria-label="Další">→</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  function go(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+  }
+
+  document.getElementById('prev').onclick = () => go(current - 1);
+  document.getElementById('next').onclick = () => go(current + 1);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialSlide = parseInt(urlParams.get('slide'), 10);
+  if (!isNaN(initialSlide) && initialSlide >= 1 && initialSlide <= slides.length) {
+    go(initialSlide - 1);
+  } else {
+    go(0);
+  }
+</script>
+
+</body>
+</html>
