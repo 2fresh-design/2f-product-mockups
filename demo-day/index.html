@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2F Product — Demo Day update, 29. 4. 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --bg-alt: #F0EFEA;
+    --ink: #0D0D0D;
+    --ink-soft: #2E2E2E;
+    --muted: #8A8A85;
+    --pink: #FF77AA;
+    --pink-soft: #FFE0EE;
+    --rule: #0D0D0D1a;
+    --rule-strong: #0D0D0D;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 7vh 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    background: var(--bg);
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .sans { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+
+  .slide::before {
+    content: "2F / PRODUCT INITIATIVE · DEMO DAY · 2026-04-29";
+    position: absolute;
+    top: 3vh;
+    left: 4vw;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+  .slide::after {
+    content: attr(data-num);
+    position: absolute;
+    bottom: 3vh;
+    right: 4vw;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .eyebrow .dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    background: var(--pink);
+    border-radius: 50%;
+  }
+  .eyebrow .num {
+    color: var(--pink);
+    font-weight: 600;
+  }
+
+  .hl {
+    background-image: linear-gradient(180deg, transparent 0 18%, var(--pink) 18% 95%, transparent 95% 100%);
+    padding: 0 0.15em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  h1.display {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(3.5rem, 7.5vw, 7rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  h1.display .it { font-style: italic; color: var(--pink); }
+
+  h2.big {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(2.6rem, 5.5vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 22ch;
+  }
+  h2.big .it { font-style: italic; color: var(--pink); }
+
+  h3.mid {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(2.3rem, 4.2vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    max-width: 40ch;
+  }
+  h3.mid .it { font-style: italic; color: var(--pink); }
+
+  p.lead {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(1.05rem, 1.3vw, 1.35rem);
+    line-height: 1.5;
+    max-width: 58ch;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+  p.body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+  p.small {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* Cover */
+  .s-cover .stack { display: flex; flex-direction: column; gap: 1.8rem; }
+  .s-cover .hash {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--pink);
+    margin-bottom: 0.5rem;
+  }
+  .s-cover .rule-block {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .s-cover .rule-block .bar { height: 12px; width: 80px; background: var(--pink); }
+  .s-cover .rule-block .bar-sm { height: 12px; width: 28px; background: var(--ink); }
+  .s-cover .meta {
+    display: flex;
+    gap: 3.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--ink);
+    max-width: 900px;
+  }
+  .s-cover .meta > div { display: flex; flex-direction: column; gap: 0.3rem; }
+  .s-cover .meta .label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.05em; color: var(--muted); text-transform: uppercase; }
+  .s-cover .meta .val { font-size: 0.95rem; color: var(--ink); font-weight: 500; }
+
+  /* Why grid - 3 strategic reasons */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 3rem;
+    max-width: 1200px;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .why-cell {
+    padding: 1.8rem 1.5rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .why-cell:nth-child(2) { background: var(--pink); }
+  .why-cell .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .why-cell .head {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1.45rem;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+  }
+  .why-cell .body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  /* Product schema */
+  .schema {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    margin-top: 3rem;
+    max-width: 1100px;
+  }
+  .schema-node {
+    border: 2px solid var(--ink);
+    padding: 1.5rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: var(--bg);
+    min-height: 130px;
+  }
+  .schema-node.center { background: var(--pink); }
+  .schema-node .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .schema-node .name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .schema-arrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 2rem;
+    color: var(--ink);
+    align-self: center;
+    font-weight: 500;
+  }
+
+  /* Method bullets */
+  .method-list {
+    list-style: none;
+    margin-top: 2.5rem;
+    max-width: 70ch;
+  }
+  .method-list li {
+    padding: 1.3rem 0;
+    border-top: 2px solid var(--ink);
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 2rem;
+    align-items: baseline;
+  }
+  .method-list li:last-child { border-bottom: 2px solid var(--ink); }
+  .method-list .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    background: var(--pink);
+    padding: 0.3rem 0.6rem;
+    display: inline-block;
+    color: var(--ink);
+    justify-self: start;
+  }
+  .method-list .txt {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* Pain rows with quotes */
+  .pain-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    margin-top: 2.5rem;
+    max-width: 1200px;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .pain-rows .col {
+    padding: 1.6rem 1.4rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    flex-direction: column;
+  }
+  .pain-rows .col:nth-child(2) { background: var(--pink-soft); }
+  .pain-rows .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+  }
+  .pain-rows .pain {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    letter-spacing: -0.015em;
+  }
+  .pain-rows .quote {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+  .pain-rows .attr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+
+  /* Workarounds list */
+  .work-list {
+    list-style: none;
+    margin-top: 2rem;
+    max-width: 1100px;
+    columns: 2;
+    column-gap: 4rem;
+  }
+  .work-list li {
+    break-inside: avoid;
+    margin-bottom: 1.6rem;
+    padding-left: 2.2rem;
+    position: relative;
+  }
+  .work-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--pink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .work-list .title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+    line-height: 1.25;
+  }
+  .work-list .body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  /* Surprise split */
+  .surprise-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 2.5rem;
+    max-width: 1200px;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .surprise-cell {
+    padding: 2rem 1.6rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .surprise-cell:nth-child(1) { background: var(--pink); }
+  .surprise-cell .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .surprise-cell .head {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1.7rem;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .surprise-cell .body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* Status / next */
+  .status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 2.5rem;
+    max-width: 1100px;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .status-block {
+    padding: 1.6rem 1.4rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .status-block h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--pink);
+    padding: 0.3rem 0.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+  .status-block p {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .status-block p .em { font-weight: 600; background: var(--pink-soft); padding: 0 0.2em; }
+  .status-block p.sub { color: var(--ink-soft); font-size: 0.88rem; margin-top: 0.6rem; }
+
+  /* Closing */
+  .closing-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: end; }
+  .closing-big {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 3.6vw, 3.4rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .closing-big .it { font-style: italic; color: var(--pink); }
+  .closing-meta {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .closing-meta strong { color: var(--ink); font-weight: 600; }
+  .closing-meta .tag {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--ink);
+    padding: 0.3rem 0.6rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed;
+    bottom: 3vh;
+    left: 4vw;
+    display: flex;
+    gap: 0.3rem;
+    z-index: 10;
+  }
+  .nav button {
+    width: 34px;
+    height: 34px;
+    border: 2px solid var(--ink);
+    background: var(--bg);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .nav button:hover { background: var(--pink); }
+
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--pink);
+    transition: width 0.3s;
+    z-index: 10;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  @media print {
+    @page { size: 1920px 1080px; margin: 0; }
+    html, body { overflow: visible; width: 1920px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .deck { height: auto; }
+    .slide {
+      opacity: 1 !important;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      width: 1920px;
+      height: 1080px;
+      inset: auto;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .slide:last-child { page-break-after: auto; }
+    .nav, .progress { display: none; }
+    .hl {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 10 10'><rect x='0' y='1.8' width='10' height='7.4' fill='%23FF77AA'/></svg>") !important;
+      background-size: 100% 100% !important;
+      background-repeat: no-repeat !important;
+      padding: 0 0.15em !important;
+    }
+    h1.display { line-height: 1.35 !important; }
+    h2.big { line-height: 1.3 !important; }
+    h3.mid { line-height: 1.3 !important; }
+    .closing-big { line-height: 1.3 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck">
+
+  <!-- 1: Cover -->
+  <section class="slide s-cover active" data-num="01 / 08">
+    <div class="stack">
+      <span class="hash">#demo-day · #building-in-public · №01</span>
+      <h1 class="display">Stavíme si<br><span class="hl">vlastní produkt</span>.</h1>
+      <div class="rule-block"><div class="bar"></div><div class="bar-sm"></div></div>
+      <p class="lead" style="margin-top:1.5rem;">Krátký update o tom, co je 2FRESH product initiative, proč ji děláme, kde teď jsme — a co jsme za pár měsíců hloubkového výzkumu zjistili nejzajímavějšího.</p>
+      <div class="meta">
+        <div><span class="label">Datum</span><span class="val">29. 4. 2026</span></div>
+        <div><span class="label">Mluví</span><span class="val">Milan Chvojka</span></div>
+        <div><span class="label">Pro</span><span class="val">Demo Day · celá 2FRESH</span></div>
+        <div><span class="label">Fáze</span><span class="val">Pre-discovery</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2: Proč to děláme -->
+  <section class="slide" data-num="02 / 08">
+    <p class="eyebrow"><span class="dot"></span><span class="num">01</span>&nbsp;&nbsp;PROČ TO DĚLÁME</p>
+    <h2 class="big">Není to side project.<br>Je to <span class="hl">dlouhodobý směr</span>.</h2>
+    <div class="why-grid">
+      <div class="why-cell">
+        <div class="label">Diverzifikace</div>
+        <div class="head">Příjmy mimo body-leasing.</div>
+        <div class="body">Agenturní model je závislý na lidech a hodinách. Vlastní produkt otevírá druhý pilíř — škálovatelný, opakovaně prodejný.</div>
+      </div>
+      <div class="why-cell">
+        <div class="label">Stavíme na svém</div>
+        <div class="head">Design, agentury, hiring.</div>
+        <div class="body">Nelezeme do oboru, kterému nerozumíme. Stavíme na třech věcech, které tady děláme každý den 15 let.</div>
+      </div>
+      <div class="why-cell">
+        <div class="label">Vlastní bolest</div>
+        <div class="head">Řešíme i sami sobě.</div>
+        <div class="body">2FRESH samo hledá designéry, hodnotí je, dává seniorům růstovou cestu. Produkt vychází z reálné, ne hypotetické potřeby.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3: Co stavíme -->
+  <section class="slide" data-num="03 / 08">
+    <p class="eyebrow"><span class="dot"></span><span class="num">02</span>&nbsp;&nbsp;CO KONKRÉTNĚ STAVÍME</p>
+    <h3 class="mid">Self-assessment<br>+ matchmaking pro<br><span class="it">designéry a firmy.</span></h3>
+    <div class="schema">
+      <div class="schema-node">
+        <div class="role">Strana A</div>
+        <div class="name">Designér<br>(self-assessment)</div>
+      </div>
+      <div class="schema-arrow">↔</div>
+      <div class="schema-node center">
+        <div class="role">Platforma</div>
+        <div class="name">Standardy<br>+ matching</div>
+      </div>
+      <div class="schema-arrow">↔</div>
+      <div class="schema-node">
+        <div class="role">Strana B</div>
+        <div class="name">Zaměstnavatel<br>(hodnocení &amp; nábor)</div>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:2.5rem;"><strong>Důležité přiznání:</strong> přesný tvar produktu ještě laďíme. Jsme ve fázi pre-discovery — sbíráme evidenci, abychom se rozhodli, kde uděláme MVP.</p>
+  </section>
+
+  <!-- 4: Jak postupujeme -->
+  <section class="slide" data-num="04 / 08">
+    <p class="eyebrow"><span class="dot"></span><span class="num">03</span>&nbsp;&nbsp;JAK POSTUPUJEME</p>
+    <h2 class="big">Building <span class="it">in public.</span><br>Evidence, ne intuice.</h2>
+    <ul class="method-list">
+      <li>
+        <span class="tag">8 ROZHOVORŮ</span>
+        <span class="txt">Hloubkové rozhovory s designéry, hiring manažery a senior leady. ~60–90 minut. Přepis, kódování, syntéza napříč.</span>
+      </li>
+      <li>
+        <span class="tag">12 HYPOTÉZ</span>
+        <span class="txt">Kill-or-go framework. Některé padají, jiné se potvrzují, další pod tlakem. Žádná zatím definitivně nezabita.</span>
+      </li>
+      <li>
+        <span class="tag">PRINCIPY</span>
+        <span class="txt">Ship within weeks, ne months. MVP nad dokonalostí. Globální ambice, ne jen ČR. Sdílíme proces, ne jen výsledky.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 5: Co bolí všechny tři strany -->
+  <section class="slide" data-num="05 / 08">
+    <p class="eyebrow"><span class="dot"></span><span class="num">04</span>&nbsp;&nbsp;CO JSME ZJISTILI · #1</p>
+    <h2 class="big">Hiring designérů je<br><span class="hl">rozbitý</span> pro všechny.</h2>
+    <div class="pain-rows">
+      <div class="col">
+        <div class="role">Designéři</div>
+        <div class="pain">Ztrácí desítky hodin, dostávají generický feedback — nebo žádný.</div>
+        <div class="quote">„40 až 60 hodin za čtyři měsíce hledání, a feedback typu &lsquo;nepasoval jste&rsquo;."</div>
+        <div class="attr">— Mid designer / P7</div>
+      </div>
+      <div class="col">
+        <div class="role">Hiring manažeři</div>
+        <div class="pain">120 CV za 2 týdny. Čte se 20. Bez pre-filtru, bez standardů.</div>
+        <div class="quote">„Tohle už HR mohla odfiltrovat, ale nefiltrovalo se."</div>
+        <div class="attr">— Hiring lead, ČEZ / P3</div>
+      </div>
+      <div class="col">
+        <div class="role">Senior leadi</div>
+        <div class="pain">Nikdo neví, co znamená „dobrý" nebo „senior" napříč firmami.</div>
+        <div class="quote">„Jediný senior v týmu se stal benchmarkem, což je nesmysl."</div>
+        <div class="attr">— Senior + hiring lead / P6</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6: Workarounds = signál -->
+  <section class="slide" data-num="06 / 08">
+    <p class="eyebrow"><span class="dot"></span><span class="num">05</span>&nbsp;&nbsp;CO JSME ZJISTILI · #2</p>
+    <div class="split" style="margin-top:1.5rem;">
+      <div>
+        <h3 class="mid">Senioři už si<br>strukturu <span class="it">dělají sami.</span></h3>
+        <p class="body" style="margin-top:1.5rem;">Nikdo na ně nečeká. Když chybí standard, vyrobí si vlastní — investují do toho hodiny svého času. To je nejsilnější signál, že struktura má hodnotu, jaký si můžeme přát.</p>
+        <p class="body" style="margin-top:1rem;"><strong>Pointa pro produkt:</strong> nemusíme přesvědčovat, že je to potřeba. Musíme udělat to, co si dělají sami, lépe a sdíleně.</p>
+      </div>
+      <div>
+        <ul class="work-list" style="columns:1;">
+          <li>
+            <div class="title">Spider chart kompetencí</div>
+            <div class="body">P6, inspirace z Microsoftu — vizuální mapa silných a slabých stránek týmu.</div>
+          </li>
+          <li>
+            <div class="title">Vlastní kompetenční model v Excelu</div>
+            <div class="body">P2, P7 — přenosný framework napříč zaměstnavateli.</div>
+          </li>
+          <li>
+            <div class="title">AI coach přes ChatGPT</div>
+            <div class="body">P1 — příprava na pohovor + simulace feedbacku.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7: Překvapení -->
+  <section class="slide" data-num="07 / 08">
+    <p class="eyebrow"><span class="dot"></span><span class="num">06</span>&nbsp;&nbsp;CO JSME ZJISTILI · #3</p>
+    <h3 class="mid">Věci, které jsme<br><span class="it">nečekali.</span></h3>
+    <div class="surprise-split">
+      <div class="surprise-cell">
+        <div class="label">Neviditelný segment</div>
+        <div class="head">Switcheři nemají šanci.</div>
+        <div class="body">12 let ve vývoji + rok UX research = podle trhu nic. „Jakmile nemáte 5 let UX ve firmě XYZ, nemáte šanci." Celý jeden tichý segment trhu, který nikdo neobsluhuje.</div>
+      </div>
+      <div class="surprise-cell">
+        <div class="label">Root cause v inzerátu</div>
+        <div class="head">Špatný JD = špatný hiring.</div>
+        <div class="body">Generické inzeráty otravují celý proces — nepřitáhnou ty správné lidi a zároveň brání v hodnocení. Kandidáti čtou kvalitu firmy z kvality zadání. Každý další krok je už jen kompenzace.</div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:2.2rem;max-width:80ch;">A další — domain bias (banka chce bankéře-designera, ne designera), case study jako proxy pro firmu, AI jako pain ne jen příležitost. Je toho víc, než se vejde.</p>
+  </section>
+
+  <!-- 8: Kde jsme + co dál -->
+  <section class="slide" data-num="08 / 08">
+    <p class="eyebrow"><span class="dot"></span><span class="num">07</span>&nbsp;&nbsp;KDE JSME &amp; CO DÁL</p>
+    <div class="closing-grid">
+      <div>
+        <p class="closing-big">Problém je <span class="it">reálný</span>.<br>Otázka je, kterou stranu<br>obsloužíme jako <span class="hl">první</span>.</p>
+      </div>
+      <div class="closing-meta">
+        <span class="tag">STAV</span>
+        <p><strong>3 možné směry MVP:</strong> designer-first / B2B pre-vetting / hiring enablement.</p>
+        <p><strong>Co ještě nevíme:</strong> revenue model a primární zákazník. To rozhodneme s boardem.</p>
+        <p style="margin-top:1.4rem;"><strong>Next:</strong> ~5 dalších rozhovorů, prototyp místo hypotetické otázky, závěrečný report začátkem června.</p>
+        <p style="margin-top:1.6rem;color:var(--muted);font-size:0.85rem;">Building in public — pokud to chcete sledovat zblízka, ozvěte se. Otázky teď vítány.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Předchozí">←</button>
+  <button id="next" aria-label="Další">→</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  function go(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+  }
+
+  document.getElementById('prev').onclick = () => go(current - 1);
+  document.getElementById('next').onclick = () => go(current + 1);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialSlide = parseInt(urlParams.get('slide'), 10);
+  if (!isNaN(initialSlide) && initialSlide >= 1 && initialSlide <= slides.length) {
+    go(initialSlide - 1);
+  } else {
+    go(0);
+  }
+</script>
+
+</body>
+</html>
