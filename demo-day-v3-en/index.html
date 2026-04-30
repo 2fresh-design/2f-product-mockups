@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2F Product — Demo Day update, April 29, 2026 (v3, EN)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --bg-alt: #F0EFEA;
+    --ink: #0D0D0D;
+    --ink-soft: #2E2E2E;
+    --muted: #8A8A85;
+    --pink: #FF77AA;
+    --pink-soft: #FFE0EE;
+    --rule: #0D0D0D1a;
+    --rule-strong: #0D0D0D;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 7vh 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    background: var(--bg);
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .sans { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+
+  .slide::before {
+    content: "2F / PRODUCT INITIATIVE · DEMO DAY · 2026-04-29";
+    position: absolute;
+    top: 3vh;
+    left: 4vw;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+  .slide::after {
+    content: attr(data-num);
+    position: absolute;
+    bottom: 3vh;
+    right: 4vw;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .eyebrow .dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    background: var(--pink);
+    border-radius: 50%;
+  }
+  .eyebrow .num {
+    color: var(--pink);
+    font-weight: 600;
+  }
+  .eyebrow .tag {
+    color: var(--muted);
+    font-weight: 500;
+    margin-left: 0.5rem;
+  }
+
+  /* Quote slides (imported from v2) */
+  .s-quote { padding: 7vh 10vw; }
+  .q-pull {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(2.2rem, 4.6vw, 4.2rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    max-width: 26ch;
+    color: var(--ink);
+    margin: 2vh 0 1vh 0;
+  }
+  .q-pull .hl { font-style: normal; }
+  .q-attr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: inline-block;
+    background: var(--pink);
+    padding: 0.4rem 0.7rem;
+  }
+  .q-punch {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin-top: 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--rule);
+  }
+  .q-punch strong { color: var(--ink); font-weight: 600; }
+
+  .hl {
+    background-image: linear-gradient(180deg, transparent 0 18%, var(--pink) 18% 95%, transparent 95% 100%);
+    padding: 0 0.15em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  h1.display {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(3.5rem, 7.5vw, 7rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  h1.display .it { font-style: italic; color: var(--pink); }
+
+  h2.big {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(2.6rem, 5.5vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 22ch;
+  }
+  h2.big .it { font-style: italic; color: var(--pink); }
+
+  h3.mid {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(2.3rem, 4.2vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    max-width: 40ch;
+  }
+  h3.mid .it { font-style: italic; color: var(--pink); }
+
+  p.lead {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(1.05rem, 1.3vw, 1.35rem);
+    line-height: 1.5;
+    max-width: 58ch;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+  p.body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+  p.small {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* Cover */
+  .s-cover .stack { display: flex; flex-direction: column; gap: 1.8rem; }
+  .s-cover .hash {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--pink);
+    margin-bottom: 0.5rem;
+  }
+  .s-cover .rule-block {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .s-cover .rule-block .bar { height: 12px; width: 80px; background: var(--pink); }
+  .s-cover .rule-block .bar-sm { height: 12px; width: 28px; background: var(--ink); }
+  .s-cover .meta {
+    display: flex;
+    gap: 3.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--ink);
+    max-width: 900px;
+  }
+  .s-cover .meta > div { display: flex; flex-direction: column; gap: 0.3rem; }
+  .s-cover .meta .label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.05em; color: var(--muted); text-transform: uppercase; }
+  .s-cover .meta .val { font-size: 0.95rem; color: var(--ink); font-weight: 500; }
+
+  /* Why grid - 3 strategic reasons */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 3rem;
+    max-width: 1200px;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .why-cell {
+    padding: 1.8rem 1.5rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .why-cell:nth-child(2) { background: var(--pink); }
+  .why-cell .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .why-cell .head {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1.45rem;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+  }
+  .why-cell .body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  /* Product schema */
+  .schema {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    margin-top: 3rem;
+    max-width: 1100px;
+  }
+  .schema-node {
+    border: 2px solid var(--ink);
+    padding: 1.5rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: var(--bg);
+    min-height: 130px;
+  }
+  .schema-node.center { background: var(--pink); }
+  .schema-node .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .schema-node .name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .schema-arrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 2rem;
+    color: var(--ink);
+    align-self: center;
+    font-weight: 500;
+  }
+
+  /* Method bullets */
+  .method-list {
+    list-style: none;
+    margin-top: 2.5rem;
+    max-width: 70ch;
+  }
+  .method-list li {
+    padding: 1.3rem 0;
+    border-top: 2px solid var(--ink);
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 2rem;
+    align-items: baseline;
+  }
+  .method-list li:last-child { border-bottom: 2px solid var(--ink); }
+  .method-list .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    background: var(--pink);
+    padding: 0.3rem 0.6rem;
+    display: inline-block;
+    color: var(--ink);
+    justify-self: start;
+  }
+  .method-list .txt {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* Pain rows with quotes */
+  .pain-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    margin-top: 2.5rem;
+    max-width: 1200px;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .pain-rows .col {
+    padding: 1.6rem 1.4rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    flex-direction: column;
+  }
+  .pain-rows .col:nth-child(2) { background: var(--pink-soft); }
+  .pain-rows .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+  }
+  .pain-rows .pain {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    letter-spacing: -0.015em;
+  }
+  .pain-rows .quote {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+  .pain-rows .attr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+
+  /* Workarounds list */
+  .work-list {
+    list-style: none;
+    margin-top: 2rem;
+    max-width: 1100px;
+    columns: 2;
+    column-gap: 4rem;
+  }
+  .work-list li {
+    break-inside: avoid;
+    margin-bottom: 1.6rem;
+    padding-left: 2.2rem;
+    position: relative;
+  }
+  .work-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--pink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .work-list .title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+    line-height: 1.25;
+  }
+  .work-list .body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  /* Surprise split */
+  .surprise-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 2.5rem;
+    max-width: 1200px;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .surprise-cell {
+    padding: 2rem 1.6rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .surprise-cell:nth-child(1) { background: var(--pink); }
+  .surprise-cell .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .surprise-cell .head {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1.7rem;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .surprise-cell .body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* Status / next */
+  .status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 2.5rem;
+    max-width: 1100px;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .status-block {
+    padding: 1.6rem 1.4rem;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .status-block h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--pink);
+    padding: 0.3rem 0.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+  .status-block p {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .status-block p .em { font-weight: 600; background: var(--pink-soft); padding: 0 0.2em; }
+  .status-block p.sub { color: var(--ink-soft); font-size: 0.88rem; margin-top: 0.6rem; }
+
+  /* Closing */
+  .closing-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 4rem; align-items: end; }
+  .closing-big {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 3.6vw, 3.4rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .closing-big .it { font-style: italic; color: var(--pink); }
+  .closing-meta {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .closing-meta strong { color: var(--ink); font-weight: 600; }
+  .closing-meta .tag {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--ink);
+    padding: 0.3rem 0.6rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed;
+    bottom: 3vh;
+    left: 4vw;
+    display: flex;
+    gap: 0.3rem;
+    z-index: 10;
+  }
+  .nav button {
+    width: 34px;
+    height: 34px;
+    border: 2px solid var(--ink);
+    background: var(--bg);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .nav button:hover { background: var(--pink); }
+
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--pink);
+    transition: width 0.3s;
+    z-index: 10;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  @media print {
+    @page { size: 1920px 1080px; margin: 0; }
+    html, body { overflow: visible; width: 1920px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .deck { height: auto; }
+    .slide {
+      opacity: 1 !important;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      width: 1920px;
+      height: 1080px;
+      inset: auto;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .slide:last-child { page-break-after: auto; }
+    .nav, .progress { display: none; }
+    .hl {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 10 10'><rect x='0' y='1.8' width='10' height='7.4' fill='%23FF77AA'/></svg>") !important;
+      background-size: 100% 100% !important;
+      background-repeat: no-repeat !important;
+      padding: 0 0.15em !important;
+    }
+    h1.display { line-height: 1.35 !important; }
+    h2.big { line-height: 1.3 !important; }
+    h3.mid { line-height: 1.3 !important; }
+    .q-pull { line-height: 1.3 !important; }
+    .closing-big { line-height: 1.3 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck">
+
+  <!-- 1: Cover -->
+  <section class="slide s-cover active" data-num="01 / 12">
+    <div class="stack">
+      <span class="hash">#demo-day · #building-in-public · №01</span>
+      <h1 class="display" style="font-size:clamp(2.6rem,5.2vw,5rem);">Help designers<br>land a <span class="hl">job</span>.<br>Help organizations<br>land <span class="hl">designers</span>.</h1>
+      <div class="rule-block"><div class="bar"></div><div class="bar-sm"></div></div>
+      <p class="lead" style="margin-top:1.5rem;">Update from our product initiative — where we are after 8 in-depth interviews and what's most interesting.</p>
+      <div class="meta">
+        <div><span class="label">Date</span><span class="val">April 29, 2026</span></div>
+        <div><span class="label">Phase</span><span class="val">Pre-discovery</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2: Why -->
+  <section class="slide" data-num="02 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">01</span>&nbsp;&nbsp;WHY WE'RE DOING THIS</p>
+    <h2 class="big">Not a side project.<br>A <span class="hl">long-term direction</span>.</h2>
+    <div class="why-grid">
+      <div class="why-cell">
+        <div class="label">Diversification</div>
+        <div class="head">Revenue beyond the agency.</div>
+        <div class="body">The agency model depends on people and hours. A product of our own opens a second pillar — scalable, repeatable.</div>
+      </div>
+      <div class="why-cell">
+        <div class="label">Building on our turf</div>
+        <div class="head">Design, agencies, hiring.</div>
+        <div class="body">We're not entering a domain we don't understand. We're building on three things we do every day. Period.</div>
+      </div>
+      <div class="why-cell">
+        <div class="label">Our own pain</div>
+        <div class="head">Solving it for ourselves too.</div>
+        <div class="body">2FRESH itself hires designers, evaluates them, gives seniors a growth path. The product comes from a real need, not a hypothetical one.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3: What we're building -->
+  <section class="slide" data-num="03 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">02</span>&nbsp;&nbsp;WHAT WE'RE BUILDING</p>
+    <h3 class="mid">Self-assessment<br>+ matchmaking for<br><span class="it">designers and companies.</span></h3>
+    <div class="schema">
+      <div class="schema-node">
+        <div class="role">Side A</div>
+        <div class="name">Designer<br>(self-assessment)</div>
+      </div>
+      <div class="schema-arrow">↔</div>
+      <div class="schema-node center">
+        <div class="role">Platform</div>
+        <div class="name">Standards<br>+ matching</div>
+      </div>
+      <div class="schema-arrow">↔</div>
+      <div class="schema-node">
+        <div class="role">Side B</div>
+        <div class="name">Employer<br>(evaluation &amp; hiring)</div>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:2.5rem;"><strong>Important caveat:</strong> the exact product shape is still being figured out. We're in pre-discovery — gathering evidence to decide where to build the MVP.</p>
+  </section>
+
+  <!-- 4: How we work -->
+  <section class="slide" data-num="04 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">03</span>&nbsp;&nbsp;HOW WE'RE WORKING</p>
+    <h2 class="big">Building <span class="it">in public.</span><br>Evidence, not intuition.</h2>
+    <ul class="method-list">
+      <li>
+        <span class="tag">8 INTERVIEWS</span>
+        <span class="txt">In-depth interviews with designers, hiring managers, and senior leads. ~60–90 minutes. Transcribed, coded, synthesized across.</span>
+      </li>
+      <li>
+        <span class="tag">12 HYPOTHESES</span>
+        <span class="txt">Kill-or-go framework. Some falling, some confirming, others under pressure. None definitively killed yet.</span>
+      </li>
+      <li>
+        <span class="tag">PRINCIPLES</span>
+        <span class="txt">Ship within weeks, not months. MVP over perfection. Global ambition, not just the Czech market. Sharing the process, not just the results.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 5: Quote 1/6 -->
+  <section class="slide s-quote" data-num="05 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">QUOTE 1/6</span><span class="tag">#workaround</span></p>
+    <p class="q-pull">"I dropped the job ad and my CV into <span class="hl">GPT</span> and chatted with the bot. It told me what I'd forgotten."</p>
+    <span class="q-attr">Senior designer</span>
+    <p class="q-punch">The candidate used AI as a career coach for himself — replacing the mentor, colleague, or friends he'd usually turn to. <strong>Interview prep is shifting from people to the model.</strong></p>
+  </section>
+
+  <!-- 6: Quote 2/6 -->
+  <section class="slide s-quote" data-num="06 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">QUOTE 2/6</span><span class="tag">#standard</span></p>
+    <p class="q-pull">"Companies only have <span class="hl">two extreme modes</span> — either desperately begging, or passively posting a role and waiting to see who shows up."</p>
+    <span class="q-attr">Senior designer + former hiring lead</span>
+    <p class="q-punch">Either frantic candidate hunting, or passive waiting for a pile of CVs. <strong>No one has a structured process in between.</strong></p>
+  </section>
+
+  <!-- 7: Quote 3/6 -->
+  <section class="slide s-quote" data-num="07 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">QUOTE 3/6</span><span class="tag">#pain</span></p>
+    <p class="q-pull">"120 CVs in two weeks. Maybe 15 of them relevant. <span class="hl">HR could have filtered this</span> — but didn't."</p>
+    <span class="q-attr">Hiring lead, small corporate design team</span>
+    <p class="q-punch">HR as an admin pass-through, not a partner. <strong>The lead screens alone, between meetings, before 9 a.m.</strong></p>
+  </section>
+
+  <!-- 8: Quote 4/6 -->
+  <section class="slide s-quote" data-num="08 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">QUOTE 4/6</span><span class="tag">#standard</span></p>
+    <p class="q-pull">"She laid out the digits from my birth date in a grid and started <span class="hl">reading off my traits</span>."</p>
+    <span class="q-attr">Junior researcher, career switcher after 12 years in IT</span>
+    <p class="q-punch">A numerology grid as an evaluation tool in a job interview. <strong>When standards are missing, people reach for anything.</strong></p>
+  </section>
+
+  <!-- 9: Quote 5/6 -->
+  <section class="slide s-quote" data-num="09 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">QUOTE 5/6</span><span class="tag">#validation</span></p>
+    <p class="q-pull">"The case study tells you what <span class="hl">maturity</span> the company has, or how it approaches design."</p>
+    <span class="q-attr">Mid-level designer, hiring panel participant</span>
+    <p class="q-punch">Candidates judge the company by the quality of the brief they're given. <strong>When the brief is shallow, good designers apply elsewhere.</strong></p>
+  </section>
+
+  <!-- 10: Quote 6/6 -->
+  <section class="slide s-quote" data-num="10 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">QUOTE 6/6</span><span class="tag">#validation</span></p>
+    <p class="q-pull">"I don't read CVs. I scan for 30 minutes a day. <span class="hl">Even imperfect AI would do better.</span>"</p>
+    <span class="q-attr">Lead of a large corporate design team</span>
+    <p class="q-punch">A hiring manager with dozens of hires under his belt says it explicitly: <strong>pre-vetting has value. Even imperfect.</strong></p>
+  </section>
+
+  <!-- 11: Surprises -->
+  <section class="slide" data-num="11 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">04</span>&nbsp;&nbsp;OTHER THINGS WE LEARNED</p>
+    <h3 class="mid">Things we<br><span class="it">didn't expect.</span></h3>
+    <div class="surprise-split">
+      <div class="surprise-cell">
+        <div class="label">Domain bias</div>
+        <div class="head">Banks want a banker-designer.</div>
+        <div class="body">What gets evaluated is the previous client's industry, not the design skill itself. Banking, telco, e-commerce — everyone wants someone from their own world. Design competence steps aside. A risk for a product built on a portable framework.</div>
+      </div>
+      <div class="surprise-cell">
+        <div class="label">Root cause in the JD</div>
+        <div class="head">Bad JD = bad hiring.</div>
+        <div class="body">A generic job ad pulls in the wrong candidates from the start. When the root cause sits in the brief, interviews, tasks, and assessments only treat the symptoms — they can't save a bad start.</div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:2.2rem;max-width:80ch;">And more — switchers as an invisible segment, case studies as a proxy for the company, AI as pain not just opportunity. There's more than fits here.</p>
+  </section>
+
+  <!-- 12: Where we are + what's next -->
+  <section class="slide" data-num="12 / 12">
+    <p class="eyebrow"><span class="dot"></span><span class="num">05</span>&nbsp;&nbsp;WHERE WE ARE &amp; WHAT'S NEXT</p>
+    <div class="closing-grid">
+      <div>
+        <p class="closing-big">The problem is <span class="it">real</span>.<br>The question is which side<br>we serve <span class="hl">first</span>.</p>
+      </div>
+      <div class="closing-meta">
+        <span class="tag">STATUS</span>
+        <p><strong>3 possible MVP directions:</strong> designer-first / B2B pre-vetting / hiring enablement.</p>
+        <p><strong>What we don't yet know:</strong> revenue model and primary customer. To be decided with the board.</p>
+        <p style="margin-top:1.4rem;"><strong>Next:</strong> ~5 more interviews, prototype instead of hypothetical questions, final report in early June.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Previous">←</button>
+  <button id="next" aria-label="Next">→</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  function go(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+  }
+
+  document.getElementById('prev').onclick = () => go(current - 1);
+  document.getElementById('next').onclick = () => go(current + 1);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialSlide = parseInt(urlParams.get('slide'), 10);
+  if (!isNaN(initialSlide) && initialSlide >= 1 && initialSlide <= slides.length) {
+    go(initialSlide - 1);
+  } else {
+    go(0);
+  }
+</script>
+
+</body>
+</html>
