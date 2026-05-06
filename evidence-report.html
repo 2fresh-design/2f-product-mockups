@@ -416,19 +416,67 @@
     text-transform: uppercase;
     letter-spacing: 1.2px;
     color: var(--muted);
-    margin: 0 0 16px 0;
+    margin: 0;
+    font-weight: 600;
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--line);
+    margin-bottom: 16px;
+    gap: 16px;
   }
+  .sort-toolbar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sort-toolbar .sort-lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+  .sort-btn {
+    background: white;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+    transition: all 0.1s;
+  }
+  .sort-btn:hover { border-color: var(--pink); color: var(--pink); }
+  .sort-btn.active { background: var(--pink); border-color: var(--pink); color: white; }
 
-  /* Board intro card (hero) */
+  /* Board intro card (hero + tiles) */
   .board-intro {
     background: white;
     border: 1px solid var(--line);
     border-top: 4px solid var(--pink);
     padding: 32px 36px 28px;
     border-radius: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 36px;
+  }
+  .board-intro-divider {
+    margin: 28px 0 16px;
+    padding-top: 22px;
+    border-top: 1px dashed var(--line);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    font-weight: 600;
   }
   .board-intro-meta {
     color: var(--muted);
@@ -450,19 +498,18 @@
   .board-intro-body p { margin: 0 0 12px 0; }
   .board-intro-body p:last-child { margin-bottom: 0; }
 
-  /* Summary tiles (3 takeaways) */
+  /* Summary tiles (3 takeaways) — uvnitř .board-intro */
   .summary-tiles {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-bottom: 36px;
+    gap: 12px;
   }
   .summary-tile {
-    background: white;
+    background: var(--bg);
     border: 1px solid var(--line);
     border-left: 4px solid var(--line);
     border-radius: 4px;
-    padding: 22px 24px;
+    padding: 18px 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -985,6 +1032,9 @@ const STATUS_LABELS = {
 };
 
 const COHORT_ORDER = ["designer-junior", "designer-mid", "designer-senior", "hiring-manager", "recruiter-agency", "in-house TA"];
+const CATEGORY_ORDER = ["kill-or-go", "důležité", "strategické", "ostatní"];
+const STATUS_ORDER_LIST = ["posílila", "s-podmínkou", "nejasná", "neověřená"];
+let BOARD_SORT = "číslo";
 
 function statusForH(h, items) {
   // items = highlights tagged with this H
@@ -1072,6 +1122,32 @@ function statusForCell(items) {
   return { icon: "•", count: items.length, status: "directional" };
 }
 
+function sortHypotheses(hList, hypsByH) {
+  const byNumber = (a, b) => natCmp(a, b);
+  if (BOARD_SORT === "číslo") return hList.sort(byNumber);
+  if (BOARD_SORT === "kategorie") {
+    return hList.sort((a, b) => {
+      const ca = HYPOTHESES[a]?.category || "ostatní";
+      const cb = HYPOTHESES[b]?.category || "ostatní";
+      const ia = CATEGORY_ORDER.indexOf(ca);
+      const ib = CATEGORY_ORDER.indexOf(cb);
+      if (ia !== ib) return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+      return byNumber(a, b);
+    });
+  }
+  if (BOARD_SORT === "stav") {
+    return hList.sort((a, b) => {
+      const sa = statusForH(a, hypsByH[a] || []);
+      const sb = statusForH(b, hypsByH[b] || []);
+      const ia = STATUS_ORDER_LIST.indexOf(sa);
+      const ib = STATUS_ORDER_LIST.indexOf(sb);
+      if (ia !== ib) return ia - ib;
+      return byNumber(a, b);
+    });
+  }
+  return hList.sort(byNumber);
+}
+
 function renderBoard() {
   // 1. Intro
   const respondents = new Set(DATA.map(h => h.session));
@@ -1084,22 +1160,23 @@ function renderBoard() {
         <p>Po 11 hloubkových rozhovorech máme výrazně ostřejší obraz, než jsme měli na začátku. Některé hypotézy se posílily — vidíme náznaky cílové skupiny a behaviorální evidence aktuálních potřeb. Jiné ztratily ostří. Objevila se nová témata, s kterými jsme nepočítali.</p>
         <p><strong>Tento výstup je</strong> podklad pro rozhodnutí, jestli pokračovat do koncept-testingu, nebo ještě dotáhnout discovery. <strong>Není finální go/no-go.</strong> Náš obraz je dnes kvalitativně bohatší, ale jistotu o adopci konkrétního produktu, ochotě platit konkrétní ceny, ani ekonomickém uzavření ekosystému nemáme.</p>
       </div>
-    </div>
-    <div class="summary-tiles">
-      <div class="summary-tile tile-go">
-        <div class="tile-icon">🟢</div>
-        <div class="tile-headline">Designéři praktikují self-assessment</div>
-        <div class="tile-body">15 z 19 pasáží potvrzuje, že designéři dnes různé formy assessmentu používají (vlastní matice, AI coach, peer review). Validace existující potřeby — neříká, že koupí konkrétně náš produkt.</div>
-      </div>
-      <div class="summary-tile tile-go">
-        <div class="tile-icon">🟢</div>
-        <div class="tile-headline">Senior designéři chtějí strukturovaný framework</div>
-        <div class="tile-body">13 z 15 pasáží. Leadeři už dnes hodnotitelskou práci dělají, často bez nástroje, a frustrují se. Ekonomika placeného assessoru neověřena.</div>
-      </div>
-      <div class="summary-tile tile-warn">
-        <div class="tile-icon">🟡</div>
-        <div class="tile-headline">Zaměstnavatelé ochotní platit, ale framing matters</div>
-        <div class="tile-body">10 z 14 pasáží (s verdictem) potvrzuje. Jeden explicitní Kill přišel od in-house TA, která náš mockup četla jako „agentura nahrazení“. Naše frame je kritické.</div>
+      <div class="board-intro-divider">Tři klíčová zjištění</div>
+      <div class="summary-tiles">
+        <div class="summary-tile tile-go">
+          <div class="tile-icon">🟢</div>
+          <div class="tile-headline">Designéři praktikují self-assessment</div>
+          <div class="tile-body">15 z 19 pasáží potvrzuje, že designéři dnes různé formy assessmentu používají (vlastní matice, AI coach, peer review). Validace existující potřeby — neříká, že koupí konkrétně náš produkt.</div>
+        </div>
+        <div class="summary-tile tile-go">
+          <div class="tile-icon">🟢</div>
+          <div class="tile-headline">Senior designéři chtějí strukturovaný framework</div>
+          <div class="tile-body">13 z 15 pasáží. Leadeři už dnes hodnotitelskou práci dělají, často bez nástroje, a frustrují se. Ekonomika placeného assessoru neověřena.</div>
+        </div>
+        <div class="summary-tile tile-warn">
+          <div class="tile-icon">🟡</div>
+          <div class="tile-headline">Zaměstnavatelé ochotní platit, ale framing matters</div>
+          <div class="tile-body">10 z 14 pasáží (s verdictem) potvrzuje. Jeden explicitní Kill přišel od in-house TA, která náš mockup četla jako „agentura nahrazení“. Naše frame je kritické.</div>
+        </div>
       </div>
     </div>
   `;
@@ -1112,7 +1189,7 @@ function renderBoard() {
       hypsByH[h].push(item);
     }
   }
-  const hOrder = Object.keys(HYPOTHESES).sort(natCmp);
+  const hOrder = sortHypotheses(Object.keys(HYPOTHESES), hypsByH);
   const cardsHtml = hOrder.map(h => {
     const meta = HYPOTHESES[h];
     const items = hypsByH[h] || [];
@@ -1175,12 +1252,23 @@ function renderBoard() {
       </div>
     `;
   }).join("");
+  const sortBtns = ["číslo", "kategorie", "stav"].map(s => `
+    <button class="sort-btn ${BOARD_SORT === s ? 'active' : ''}" data-sort="${s}">${s.charAt(0).toUpperCase() + s.slice(1)}</button>
+  `).join("");
   document.getElementById("board-cards").innerHTML = `
     <div class="board-section">
-      <h2>Stav hypotéz (12)</h2>
+      <div class="section-head">
+        <h2>Stav hypotéz (12)</h2>
+        <div class="sort-toolbar">
+          <span class="sort-lbl">Seřadit:</span>${sortBtns}
+        </div>
+      </div>
       <div class="board-cards-grid">${cardsHtml}</div>
     </div>
   `;
+  document.querySelectorAll(".sort-btn").forEach(b => {
+    b.onclick = () => { BOARD_SORT = b.dataset.sort; renderBoard(); };
+  });
 
   // Wire up "Otevřít evidenci" buttons
   document.querySelectorAll(".h-card-link").forEach(btn => {
