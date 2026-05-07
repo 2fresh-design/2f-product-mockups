@@ -1,0 +1,2163 @@
+<!doctype html>
+<html lang="cs">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tereza Nováková — Senior UX Designer · 2F Product</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --ink: #0d0d0d;
+                --ink-soft: #2e2e2e;
+                --bg: #fafaf7;
+                --bg-alt: #f0efea;
+                --pink: #ff77aa;
+                --pink-soft: #ffe0ee;
+                --pink-deep: #d65a8a;
+                --muted: #8a8a85;
+                --rule: #0d0d0d1a;
+                --rule-soft: #0d0d0d0d;
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            html,
+            body {
+                background: var(--bg);
+                color: var(--ink);
+                font-family: "IBM Plex Sans", system-ui, sans-serif;
+                font-weight: 400;
+                line-height: 1.55;
+                -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
+            }
+            section[id] {
+                scroll-margin-top: 5rem;
+            }
+            .mono {
+                font-family: "IBM Plex Mono", monospace;
+            }
+
+            /* Mockup ribbon */
+            .ribbon {
+                position: fixed;
+                top: 1.5rem;
+                right: -3rem;
+                background: var(--ink);
+                color: var(--pink);
+                padding: 0.3rem 4rem;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                transform: rotate(35deg);
+                z-index: 200;
+                pointer-events: none;
+            }
+
+            /* Top nav */
+            .nav {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem 3rem;
+                background: rgba(250, 250, 247, 0.92);
+                backdrop-filter: blur(12px);
+                border-bottom: 1px solid var(--rule);
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.78rem;
+                letter-spacing: 0.05em;
+            }
+            .nav-brand {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                font-weight: 600;
+            }
+            .nav-brand .heart {
+                color: var(--pink);
+            }
+            .nav-brand .name {
+                color: var(--muted);
+                margin-left: 1rem;
+                padding-left: 1rem;
+                border-left: 1px solid var(--rule);
+                font-weight: 500;
+            }
+            .nav-brand .name strong {
+                color: var(--ink);
+                font-weight: 600;
+            }
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+                color: var(--muted);
+                align-items: center;
+            }
+            .nav-links a {
+                color: inherit;
+                text-decoration: none;
+                transition: color 0.15s;
+            }
+            .nav-links a:hover {
+                color: var(--pink);
+            }
+            .nav-cta {
+                background: var(--ink);
+                color: var(--pink);
+                padding: 0.5rem 1rem;
+                text-decoration: none;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+            }
+            .nav-cta:hover {
+                background: var(--pink);
+                color: var(--ink);
+            }
+
+            /* Hero */
+            .wrap {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 3rem;
+            }
+            .hero {
+                padding: 4rem 0 3rem;
+            }
+            .hero-grid {
+                display: grid;
+                grid-template-columns: 1.4fr 1fr;
+                gap: 4rem;
+                align-items: center;
+            }
+            .hero-left .eyebrow {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.78rem;
+                font-weight: 500;
+                letter-spacing: 0.12em;
+                color: var(--pink);
+                text-transform: uppercase;
+                margin-bottom: 1.5rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.6rem;
+            }
+            .hero-left .eyebrow .dot {
+                width: 8px;
+                height: 8px;
+                background: var(--pink);
+                border-radius: 50%;
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.4;
+                }
+            }
+            h1 {
+                font-family: "IBM Plex Mono", monospace;
+                font-weight: 500;
+                font-size: clamp(2.6rem, 5vw, 4.2rem);
+                line-height: 1.05;
+                letter-spacing: -0.025em;
+                margin-bottom: 1.2rem;
+            }
+            .hero-role {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 1.05rem;
+                color: var(--ink-soft);
+                margin-bottom: 1.8rem;
+            }
+            .hero-role .pill {
+                background: var(--pink);
+                padding: 0.2rem 0.6rem;
+                margin-right: 0.4rem;
+            }
+            .hero-tagline {
+                font-size: 1.15rem;
+                line-height: 1.5;
+                color: var(--ink-soft);
+                max-width: 48ch;
+                margin-bottom: 2.5rem;
+            }
+            .hero-actions {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+            }
+            .btn-primary {
+                background: var(--ink);
+                color: var(--pink);
+                border: 2px solid var(--ink);
+                padding: 0.85rem 1.6rem;
+                font-family: "IBM Plex Mono", monospace;
+                font-weight: 600;
+                font-size: 0.9rem;
+                letter-spacing: 0.05em;
+                text-decoration: none;
+                cursor: pointer;
+                transition: all 0.15s;
+                display: inline-block;
+            }
+            .btn-primary:hover {
+                transform: translate(-2px, -2px);
+                box-shadow: 4px 4px 0 var(--pink);
+            }
+            .btn-link {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.9rem;
+                color: var(--ink);
+                text-decoration: underline;
+                padding: 0.85rem 0.5rem;
+            }
+            .btn-link:hover {
+                color: var(--pink);
+            }
+
+            .hero-photo-wrap {
+                justify-self: end;
+                position: relative;
+                width: 100%;
+                max-width: 380px;
+            }
+            .hero-photo-wrap img {
+                width: 100%;
+                aspect-ratio: 4/5;
+                object-fit: cover;
+                display: block;
+                background: var(--bg-alt);
+            }
+            .hero-photo-wrap .frame-tag {
+                position: absolute;
+                bottom: -10px;
+                left: -10px;
+                background: var(--pink);
+                color: var(--ink);
+                padding: 0.4rem 0.8rem;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+            }
+            .hero-photo-wrap .verified-badge {
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                background: var(--ink);
+                color: var(--pink);
+                padding: 0.5rem 0.9rem;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+            }
+            .hero-photo-wrap .verified-badge::before {
+                content: "✓";
+                font-size: 0.9rem;
+                font-weight: 700;
+            }
+
+            /* Quick stats strip */
+            .stats-strip {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                background: var(--ink);
+                color: white;
+                margin-top: 2rem;
+            }
+            .stat {
+                padding: 1.6rem 1.5rem;
+                border-right: 1px solid #ffffff1a;
+            }
+            .stat:last-child {
+                border-right: none;
+            }
+            .stat .label {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-bottom: 0.4rem;
+            }
+            .stat .value {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: var(--pink);
+                letter-spacing: -0.01em;
+            }
+
+            /* Generic section */
+            section {
+                padding: 4rem 0;
+            }
+            .section-label {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.78rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-bottom: 1.2rem;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            .section-label::before {
+                content: "";
+                width: 24px;
+                height: 1px;
+                background: var(--pink);
+            }
+            h2 {
+                font-family: "IBM Plex Mono", monospace;
+                font-weight: 500;
+                font-size: clamp(1.8rem, 3vw, 2.4rem);
+                line-height: 1.15;
+                letter-spacing: -0.02em;
+                margin-bottom: 2rem;
+                max-width: 30ch;
+            }
+            h2 .it {
+                font-style: italic;
+                color: var(--pink);
+            }
+
+            /* About: Skills + Summary */
+            .about-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.4fr;
+                gap: 4rem;
+                align-items: start;
+            }
+            .skills-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.9rem;
+            }
+            .skill-row {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 1rem;
+                align-items: center;
+                padding: 0.4rem 0;
+                border-bottom: 1px solid var(--rule-soft);
+            }
+            .skill-row:last-child {
+                border-bottom: none;
+            }
+            .skill-name {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.92rem;
+                font-weight: 500;
+                color: var(--ink);
+                letter-spacing: 0.03em;
+                text-transform: uppercase;
+            }
+            .skill-dots {
+                display: flex;
+                gap: 0.35rem;
+            }
+            .dot {
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                background: var(--pink);
+            }
+            .dot.empty {
+                background: var(--bg-alt);
+                border: 1px solid var(--rule);
+            }
+
+            .summary-block p {
+                font-size: 1rem;
+                line-height: 1.65;
+                margin-bottom: 1.2rem;
+                color: var(--ink-soft);
+            }
+            .summary-block p:first-child::first-letter {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 2.6rem;
+                font-weight: 500;
+                float: left;
+                line-height: 0.85;
+                margin-right: 0.4rem;
+                margin-top: 0.3rem;
+                color: var(--pink);
+            }
+            .summary-links {
+                margin-top: 1.5rem;
+                display: flex;
+                gap: 1rem;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.8rem;
+                letter-spacing: 0.05em;
+            }
+            .summary-links a {
+                color: var(--ink);
+                text-decoration: none;
+                padding: 0.4rem 0.8rem;
+                border: 1px solid var(--ink);
+                transition: all 0.15s;
+            }
+            .summary-links a:hover {
+                background: var(--ink);
+                color: var(--pink);
+            }
+            .summary-links a::after {
+                content: " →";
+                color: var(--pink);
+            }
+
+            /* Assessor verdict — featured */
+            .verdict {
+                background: var(--ink);
+                color: white;
+                padding: 4rem 3rem;
+                margin: 2rem 0;
+                position: relative;
+            }
+            .verdict::before {
+                content: "VERIFIED BY 2F PRODUCT";
+                position: absolute;
+                top: -10px;
+                left: 3rem;
+                background: var(--pink);
+                color: var(--ink);
+                padding: 0.4rem 1rem;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.72rem;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+            }
+            .verdict .verdict-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: end;
+                margin-bottom: 2.5rem;
+                padding-bottom: 1.5rem;
+                border-bottom: 1px solid #ffffff1a;
+            }
+            .verdict h2 {
+                color: white;
+                margin-bottom: 0;
+            }
+            .verdict h2 .it {
+                color: var(--pink);
+            }
+            .verdict-meta {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.78rem;
+                letter-spacing: 0.05em;
+                color: var(--muted);
+                text-align: right;
+            }
+            .verdict-meta strong {
+                color: var(--pink);
+                font-weight: 500;
+            }
+            .verdict-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem 3rem;
+            }
+            .verdict-block {
+                position: relative;
+            }
+            .verdict-block .label {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.78rem;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--pink);
+                margin-bottom: 0.8rem;
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+            }
+            .verdict-block .label::before {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                color: var(--muted);
+            }
+            .verdict-block.strengths .label::before {
+                content: "01";
+            }
+            .verdict-block.gaps .label::before {
+                content: "02";
+            }
+            .verdict-block.ideal .label::before {
+                content: "03";
+            }
+            .verdict-block.fit .label::before {
+                content: "04";
+            }
+            .verdict-block p {
+                font-size: 0.97rem;
+                line-height: 1.6;
+                color: white;
+            }
+
+            /* References */
+            .refs-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+            .ref-card {
+                background: white;
+                border: 1px solid var(--rule);
+                border-left: 4px solid var(--pink);
+                padding: 1.8rem 2rem;
+                position: relative;
+            }
+            .ref-card::before {
+                content: "“";
+                position: absolute;
+                top: 0.5rem;
+                right: 1.2rem;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 5rem;
+                color: var(--pink-soft);
+                line-height: 1;
+            }
+            .ref-card blockquote {
+                font-size: 1.02rem;
+                line-height: 1.55;
+                color: var(--ink);
+                font-style: italic;
+                margin-bottom: 1.2rem;
+                position: relative;
+            }
+            .ref-card cite {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.78rem;
+                color: var(--muted);
+                font-style: normal;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                display: block;
+            }
+            .ref-card cite strong {
+                color: var(--ink);
+                font-weight: 600;
+            }
+
+            /* Selected work — preview grid */
+            .work-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+            .work-card {
+                display: block;
+                text-decoration: none;
+                color: inherit;
+                background: white;
+                border: 1px solid var(--rule);
+                transition: all 0.2s;
+            }
+            .work-card:hover {
+                transform: translate(-2px, -2px);
+                box-shadow: 6px 6px 0 var(--pink);
+            }
+            .work-thumb {
+                aspect-ratio: 4/3;
+                background: var(--bg-alt);
+                position: relative;
+                overflow: hidden;
+            }
+            .work-card-body {
+                padding: 1.2rem 1.4rem 1.4rem;
+            }
+            .work-card .num {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                letter-spacing: 0.1em;
+                color: var(--pink);
+                text-transform: uppercase;
+                margin-bottom: 0.4rem;
+            }
+            .work-card h3 {
+                font-family: "IBM Plex Mono", monospace;
+                font-weight: 500;
+                font-size: 1.05rem;
+                line-height: 1.25;
+                margin-bottom: 0.6rem;
+                letter-spacing: -0.01em;
+            }
+            .work-card .desc {
+                font-size: 0.9rem;
+                color: var(--ink-soft);
+                line-height: 1.5;
+                margin-bottom: 1rem;
+            }
+            .work-card .read {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.78rem;
+                color: var(--ink);
+                letter-spacing: 0.05em;
+                font-weight: 600;
+            }
+            .work-card .read::after {
+                content: " →";
+                color: var(--pink);
+                transition: transform 0.15s;
+                display: inline-block;
+            }
+            .work-card:hover .read::after {
+                transform: translateX(4px);
+            }
+
+            /* CSS dashboard mockups (used as work-thumb content) */
+            .dash {
+                width: 100%;
+                height: 100%;
+                background: white;
+                display: flex;
+                flex-direction: column;
+                font-family: "IBM Plex Sans", sans-serif;
+                position: relative;
+                overflow: hidden;
+            }
+            .dash-chrome {
+                background: #e8e8e3;
+                padding: 6px 10px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                border-bottom: 1px solid #00000010;
+            }
+            .dash-chrome .dots {
+                display: flex;
+                gap: 4px;
+            }
+            .dash-chrome .dots span {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+            }
+            .dash-chrome .dots span:nth-child(1) {
+                background: #ff5f56;
+            }
+            .dash-chrome .dots span:nth-child(2) {
+                background: #ffbd2e;
+            }
+            .dash-chrome .dots span:nth-child(3) {
+                background: #27c93f;
+            }
+            .dash-chrome .url {
+                background: white;
+                padding: 3px 10px;
+                border-radius: 3px;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 9px;
+                color: #555;
+                margin-left: 8px;
+                flex: 1;
+            }
+            .dash-body {
+                flex: 1;
+                display: flex;
+                background: #f8f8f4;
+            }
+            .dash-side {
+                width: 22%;
+                background: #1a1a1a;
+                color: #aaa;
+                padding: 10px 8px;
+                font-family: "IBM Plex Mono", monospace;
+            }
+            .dash-side .logo {
+                color: var(--pink);
+                font-weight: 600;
+                font-size: 10px;
+                margin-bottom: 12px;
+            }
+            .dash-side .nav-item {
+                font-size: 8px;
+                padding: 5px 6px;
+                margin-bottom: 2px;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+            }
+            .dash-side .nav-item.active {
+                background: var(--pink);
+                color: var(--ink);
+                font-weight: 600;
+            }
+            .dash-main {
+                flex: 1;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .dash-h {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .dash-h .title {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 11px;
+                font-weight: 600;
+            }
+            .dash-h .pill {
+                background: var(--ink);
+                color: var(--pink);
+                padding: 2px 6px;
+                font-size: 8px;
+                font-family: "IBM Plex Mono", monospace;
+                letter-spacing: 0.05em;
+            }
+            .dash-kpis {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+            .kpi {
+                background: white;
+                border: 1px solid #00000010;
+                padding: 6px 8px;
+            }
+            .kpi .lbl {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 7px;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 2px;
+            }
+            .kpi .v {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--ink);
+            }
+            .kpi .delta {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 7px;
+                color: #2a8a4a;
+            }
+            .kpi .delta.down {
+                color: #c14a4a;
+            }
+            .dash-chart {
+                background: white;
+                border: 1px solid #00000010;
+                padding: 8px;
+                flex: 1;
+                position: relative;
+                min-height: 60px;
+            }
+            .dash-chart .clbl {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 8px;
+                color: #555;
+                margin-bottom: 4px;
+            }
+            .dash-chart svg {
+                width: 100%;
+                height: calc(100% - 12px);
+            }
+            .dash-table {
+                background: white;
+                border: 1px solid #00000010;
+                padding: 6px 8px;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 7px;
+            }
+            .dash-table .row {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr;
+                gap: 4px;
+                padding: 2px 0;
+                border-bottom: 1px solid #00000008;
+            }
+            .dash-table .row.head {
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                font-weight: 600;
+            }
+            .dash-table .row.head {
+                border-bottom-color: #00000020;
+            }
+
+            /* Checkout dashboard */
+            .checkout {
+                width: 100%;
+                height: 100%;
+                background: white;
+                display: flex;
+                flex-direction: column;
+            }
+            .checkout-h {
+                padding: 8px 12px;
+                background: white;
+                border-bottom: 1px solid #00000010;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .checkout-h .logo {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 11px;
+                font-weight: 600;
+            }
+            .checkout-steps {
+                display: flex;
+                gap: 4px;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 8px;
+            }
+            .checkout-steps .step {
+                color: #aaa;
+            }
+            .checkout-steps .step.active {
+                color: var(--ink);
+                font-weight: 600;
+            }
+            .checkout-steps .step.done {
+                color: var(--pink);
+            }
+            .checkout-body {
+                flex: 1;
+                background: #f8f8f4;
+                padding: 10px;
+                display: grid;
+                grid-template-columns: 1.4fr 1fr;
+                gap: 8px;
+            }
+            .checkout-form {
+                background: white;
+                border: 1px solid #00000010;
+                padding: 10px;
+            }
+            .checkout-form .lbl {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 7px;
+                color: #888;
+                text-transform: uppercase;
+                margin-bottom: 4px;
+                margin-top: 6px;
+                letter-spacing: 0.05em;
+            }
+            .checkout-form .lbl:first-child {
+                margin-top: 0;
+            }
+            .checkout-form .input {
+                background: #f0f0eb;
+                height: 16px;
+                border: 1px solid #00000010;
+                padding: 2px 6px;
+                font-size: 7px;
+                color: #333;
+                font-family: "IBM Plex Mono", monospace;
+            }
+            .checkout-form .row2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4px;
+            }
+            .checkout-summary {
+                background: var(--ink);
+                color: white;
+                padding: 10px;
+            }
+            .checkout-summary .stitle {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 9px;
+                color: var(--pink);
+                margin-bottom: 6px;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+            }
+            .checkout-summary .row {
+                display: flex;
+                justify-content: space-between;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 8px;
+                padding: 3px 0;
+                border-bottom: 1px solid #ffffff1a;
+            }
+            .checkout-summary .total {
+                margin-top: 4px;
+                padding-top: 6px;
+                border-top: 1px solid #ffffff40;
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--pink);
+            }
+            .checkout-summary .pay-btn {
+                margin-top: 8px;
+                background: var(--pink);
+                color: var(--ink);
+                padding: 6px;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 9px;
+                font-weight: 600;
+                text-align: center;
+                letter-spacing: 0.05em;
+            }
+
+            /* Mobile banking */
+            .phone {
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(160deg, #1a1a2e 0%, #16213e 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 12px;
+            }
+            .phone-frame {
+                width: 100%;
+                max-width: 180px;
+                aspect-ratio: 9/19.5;
+                background: white;
+                border-radius: 22px;
+                border: 4px solid #0a0a0a;
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
+            .phone-frame::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50%;
+                height: 12px;
+                background: #0a0a0a;
+                border-radius: 0 0 8px 8px;
+                z-index: 5;
+            }
+            .phone-status {
+                padding: 14px 12px 6px;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 6px;
+                color: var(--ink);
+                display: flex;
+                justify-content: space-between;
+                font-weight: 600;
+            }
+            .phone-content {
+                flex: 1;
+                padding: 8px 12px 14px;
+                display: flex;
+                flex-direction: column;
+            }
+            .phone-illu {
+                width: 100%;
+                aspect-ratio: 1.3;
+                background: var(--pink-soft);
+                border-radius: 12px;
+                margin-bottom: 10px;
+                position: relative;
+                overflow: hidden;
+            }
+            .phone-illu .circle {
+                position: absolute;
+                width: 60%;
+                height: 60%;
+                background: var(--pink);
+                border-radius: 50%;
+                top: 20%;
+                left: 20%;
+            }
+            .phone-illu .square {
+                position: absolute;
+                width: 40%;
+                height: 40%;
+                background: var(--ink);
+                bottom: 10%;
+                right: 5%;
+                transform: rotate(15deg);
+            }
+            .phone-title {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 10px;
+                font-weight: 600;
+                color: var(--ink);
+                line-height: 1.2;
+                margin-bottom: 6px;
+            }
+            .phone-body {
+                font-size: 7px;
+                color: #555;
+                line-height: 1.4;
+                margin-bottom: 10px;
+            }
+            .phone-cta {
+                margin-top: auto;
+                background: var(--ink);
+                color: var(--pink);
+                padding: 6px 8px;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 8px;
+                font-weight: 600;
+                text-align: center;
+                letter-spacing: 0.05em;
+                border-radius: 4px;
+            }
+            .phone-step {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 6px;
+                color: var(--muted);
+                margin-top: 4px;
+                text-align: center;
+                letter-spacing: 0.1em;
+            }
+
+            /* Case detail sections */
+            .case-detail {
+                padding: 5rem 0;
+                border-top: 1px solid var(--rule);
+            }
+            .case-detail .case-num {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.78rem;
+                color: var(--pink);
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                margin-bottom: 1rem;
+            }
+            .case-detail h2 {
+                margin-bottom: 1.5rem;
+                max-width: 26ch;
+            }
+            .case-detail .case-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.3fr;
+                gap: 3rem;
+                align-items: start;
+            }
+            .case-detail .case-text p {
+                margin-bottom: 1.2rem;
+                font-size: 1rem;
+                color: var(--ink-soft);
+                line-height: 1.65;
+            }
+            .case-meta-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.2rem;
+                margin-top: 2rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid var(--rule);
+            }
+            .case-meta-grid .item .lbl {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                letter-spacing: 0.1em;
+                color: var(--muted);
+                text-transform: uppercase;
+                margin-bottom: 0.3rem;
+            }
+            .case-meta-grid .item .val {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.92rem;
+                font-weight: 500;
+                color: var(--ink);
+            }
+
+            .case-visual {
+                background: var(--bg-alt);
+                aspect-ratio: 4/3;
+                position: relative;
+                overflow: hidden;
+            }
+            .case-impact {
+                margin-top: 1rem;
+                background: var(--ink);
+                color: white;
+                padding: 1.2rem 1.5rem;
+            }
+            .case-impact .lbl {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                color: var(--pink);
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                margin-bottom: 0.5rem;
+            }
+            .case-impact .stats {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+            .case-impact .stat-num {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: var(--pink);
+                letter-spacing: -0.01em;
+            }
+            .case-impact .stat-lbl {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                color: white;
+                opacity: 0.7;
+                margin-top: 0.2rem;
+            }
+
+            /* Methodology */
+            .methodology {
+                background: var(--bg-alt);
+                padding: 3rem;
+                margin-top: 3rem;
+            }
+            .methodology h3 {
+                font-family: "IBM Plex Mono", monospace;
+                font-weight: 500;
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+                letter-spacing: -0.01em;
+            }
+            .methodology p {
+                font-size: 0.97rem;
+                line-height: 1.65;
+                color: var(--ink-soft);
+                max-width: 70ch;
+            }
+            .methodology .components {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1rem;
+                margin-top: 2rem;
+                padding-top: 2rem;
+                border-top: 1px solid var(--rule);
+            }
+            .methodology .comp .num {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.7rem;
+                color: var(--pink);
+                letter-spacing: 0.1em;
+                margin-bottom: 0.4rem;
+            }
+            .methodology .comp .name {
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.92rem;
+                font-weight: 600;
+                margin-bottom: 0.4rem;
+            }
+            .methodology .comp .det {
+                font-size: 0.85rem;
+                color: var(--ink-soft);
+                line-height: 1.45;
+            }
+
+            /* Final CTA */
+            .final-cta {
+                background: var(--pink);
+                padding: 4rem 3rem;
+                margin-top: 4rem;
+                text-align: center;
+                border: 2px solid var(--ink);
+            }
+            .final-cta h2 {
+                margin: 0 auto 1rem;
+                max-width: 28ch;
+            }
+            .final-cta p {
+                font-size: 1.05rem;
+                margin: 0 auto 2rem;
+                max-width: 50ch;
+                color: var(--ink);
+            }
+
+            /* Footer */
+            footer {
+                padding: 2.5rem 0 1.5rem;
+                border-top: 1px solid var(--rule);
+                margin-top: 4rem;
+                font-family: "IBM Plex Mono", monospace;
+                font-size: 0.78rem;
+                color: var(--muted);
+                letter-spacing: 0.03em;
+            }
+            footer .frow {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            footer .heart {
+                color: var(--pink);
+            }
+
+            /* Responsive */
+            @media (max-width: 900px) {
+                .nav {
+                    padding: 1rem 1.5rem;
+                    flex-wrap: wrap;
+                    gap: 1rem;
+                }
+                .nav-links {
+                    flex-wrap: wrap;
+                    gap: 1rem;
+                }
+                .wrap {
+                    padding: 0 1.5rem;
+                }
+                .hero-grid,
+                .about-grid,
+                .case-detail .case-grid,
+                .verdict-grid,
+                .refs-grid,
+                .work-grid {
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                }
+                .hero-photo-wrap {
+                    justify-self: start;
+                    max-width: 240px;
+                }
+                .stats-strip {
+                    grid-template-columns: 1fr 1fr;
+                }
+                .stat:nth-child(2) {
+                    border-right: none;
+                }
+                .verdict {
+                    padding: 3rem 1.5rem;
+                }
+                .verdict::before {
+                    left: 1.5rem;
+                }
+                .methodology {
+                    padding: 2rem 1.5rem;
+                }
+                .methodology .components {
+                    grid-template-columns: 1fr 1fr;
+                }
+                .ribbon {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="ribbon">JEN KONCEPT</div>
+
+        <!-- Sticky nav -->
+        <nav class="nav">
+            <div class="nav-brand">
+                <span class="heart">♥</span><span>2F PRODUCT</span>
+                <span class="name">Profil · <strong>Tereza Nováková</strong></span>
+            </div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#verdict">Verdict</a>
+                <a href="#references">References</a>
+                <a href="#work">Work</a>
+                <a class="nav-cta" href="#contact">Domluvit interview →</a>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <div class="wrap">
+            <section class="hero">
+                <div class="hero-grid">
+                    <div class="hero-left">
+                        <div class="eyebrow">
+                            <span class="dot"></span> Available · srpen 2026
+                        </div>
+                        <h1>Tereza<br />Nováková.</h1>
+                        <div class="hero-role">
+                            <span class="pill">Senior UX Designer</span>
+                            Praha · 9 let praxe
+                        </div>
+                        <p class="hero-tagline">
+                            Discovery, návrh a měření digitálních produktů, které
+                            uživatelé pochopí a business si dokáže obhájit.
+                            B2B SaaS · E-commerce · Finanční služby.
+                        </p>
+                        <div class="hero-actions">
+                            <a class="btn-primary" href="#contact"
+                                >Domluvit interview</a
+                            >
+                            <a class="btn-link" href="#verdict"
+                                >Přečíst assessor verdict ↓</a
+                            >
+                        </div>
+                    </div>
+                    <div class="hero-photo-wrap">
+                        <div class="verified-badge">2F VERIFIED</div>
+                        <img
+                            src="assets/tereza-photo.jpg"
+                            alt="Tereza Nováková (AI-generated portrait pro koncept demo)"
+                        />
+                        <div class="frame-tag">PROFILE_01</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Stats strip -->
+        <div class="wrap">
+            <div class="stats-strip">
+                <div class="stat">
+                    <div class="label">Years of Experience</div>
+                    <div class="value">9</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Availability</div>
+                    <div class="value">Srpen 2026</div>
+                </div>
+                <div class="stat">
+                    <div class="label">In the Office</div>
+                    <div class="value">3 dny / týden</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Assessment Score</div>
+                    <div class="value">8.4 / 10</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About: Skills + Summary -->
+        <div class="wrap">
+            <section id="about">
+                <div class="section-label">01 · About</div>
+                <h2>Co Tereza dělá <span class="it">a v čem je silná.</span></h2>
+                <div class="about-grid">
+                    <div>
+                        <div class="skills-list">
+                            <div class="skill-row">
+                                <span class="skill-name">Visual</span>
+                                <span class="skill-dots">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot empty"></span>
+                                </span>
+                            </div>
+                            <div class="skill-row">
+                                <span class="skill-name">UX</span>
+                                <span class="skill-dots">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </span>
+                            </div>
+                            <div class="skill-row">
+                                <span class="skill-name">Strategy</span>
+                                <span class="skill-dots">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot empty"></span>
+                                </span>
+                            </div>
+                            <div class="skill-row">
+                                <span class="skill-name">Design System</span>
+                                <span class="skill-dots">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot empty"></span>
+                                    <span class="dot empty"></span>
+                                </span>
+                            </div>
+                            <div class="skill-row">
+                                <span class="skill-name">Research</span>
+                                <span class="skill-dots">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </span>
+                            </div>
+                            <div class="skill-row">
+                                <span class="skill-name">Leadership</span>
+                                <span class="skill-dots">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot empty"></span>
+                                    <span class="dot empty"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="summary-links">
+                            <a href="#">Resume PDF</a>
+                            <a href="#">LinkedIn</a>
+                        </div>
+                    </div>
+                    <div class="summary-block">
+                        <p>
+                            Tereza se zaměřuje na UX research a end-to-end návrh
+                            digitálních produktů s důrazem na uživatelské potřeby
+                            a měřitelné výsledky pro business.
+                        </p>
+                        <p>
+                            Vede projekty od discovery po launch, propojuje
+                            cíle businessu se zkušenostmi uživatelů. Doménově
+                            silná v B2B SaaS pro analytiku, e-commerce a
+                            finančních službách. Pohodlně pracuje v
+                            cross-functional týmu (PM, engineering, data).
+                        </p>
+                        <p>
+                            Preferuje IC roli s prostorem pro mentoring juniorů.
+                            Vědomě méně silná v přímém řízení design týmu a
+                            v projektech, kde je primární požadavek
+                            vizuální brand polish.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Assessor verdict -->
+        <div class="wrap">
+            <section id="verdict">
+                <div class="section-label">02 · Assessor verdict</div>
+                <h2>
+                    Co vidíme po 90minutovém
+                    <span class="it">strukturovaném assessmentu.</span>
+                </h2>
+                <div class="verdict">
+                    <div class="verdict-header">
+                        <h2 style="max-width: 22ch">
+                            Profil <span class="it">silného</span> senior UX designera.
+                        </h2>
+                        <div class="verdict-meta">
+                            Assessor: <strong>2FRESH senior UX lead</strong><br />
+                            Session: 90 min · 2026-04-22<br />
+                            Framework: 2FRESH Competency v3
+                        </div>
+                    </div>
+                    <div class="verdict-grid">
+                        <div class="verdict-block strengths">
+                            <div class="label">Silné stránky</div>
+                            <p>
+                                Disciplinovaný research approach, propojuje
+                                kvalitativní vhled s kvantitativními daty.
+                                Velmi dobrá v facilitaci cross-functional
+                                workshopů a v argumentaci designových
+                                rozhodnutí směrem k businessu.
+                            </p>
+                        </div>
+                        <div class="verdict-block gaps">
+                            <div class="label">Slepá místa</div>
+                            <p>
+                                Méně zkušená s vedením design týmu (preferuje
+                                IC s mentoringem). Méně komfortní v rolích,
+                                kde je primárně vyžadováno pure visual design
+                                nebo brand polish bez kontextu produktu.
+                            </p>
+                        </div>
+                        <div class="verdict-block ideal">
+                            <div class="label">Ideální projekt</div>
+                            <p>
+                                Středně velký B2B/B2C produkt s reálnými
+                                uživateli, kde je potřeba propojit research,
+                                návrh a měření dopadu. Tým 3–8 lidí, IC role
+                                nebo design lead menšího týmu (max 2–3
+                                designeři).
+                            </p>
+                        </div>
+                        <div class="verdict-block fit">
+                            <div class="label">Kulturní fit</div>
+                            <p>
+                                Preferuje hybridní setup, autonomii a přímý
+                                přístup k uživatelům. Méně se osvědčí v silně
+                                hierarchických organizacích s pomalým
+                                rozhodováním přes několik schvalovacích vrstev.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- References -->
+        <div class="wrap">
+            <section id="references">
+                <div class="section-label">03 · References</div>
+                <h2>Co o ní říkají <span class="it">předchozí kolegové.</span></h2>
+                <div class="refs-grid">
+                    <div class="ref-card">
+                        <blockquote>
+                            Tereza dotahuje. Když má v hlavě jasný směr, jde
+                            po něm důsledně a přitom je otevřená feedbacku.
+                            Cenila jsem si toho, jak uměla research převést
+                            do konkrétních rozhodnutí, která jsme dokázali
+                            obhájit před boardem.
+                        </blockquote>
+                        <cite>
+                            <strong>Product Manager</strong><br />
+                            B2B SaaS · Spolupráce 2024
+                        </cite>
+                    </div>
+                    <div class="ref-card">
+                        <blockquote>
+                            Skvěle pracuje s engineery. Nezdržuje, dodává
+                            připravené specifikace, je ochotná jít s námi
+                            do detailu komponent. Doporučil bych ji do
+                            každého product týmu, který chce mít UX, jenž
+                            opravdu doletí do produkce.
+                        </blockquote>
+                        <cite>
+                            <strong>Engineering Lead</strong><br />
+                            E-commerce platforma · Spolupráce 2023
+                        </cite>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Selected work -->
+        <div class="wrap">
+            <section id="work">
+                <div class="section-label">04 · Selected work</div>
+                <h2>
+                    Tři případové studie z poslední
+                    <span class="it">let praxe.</span>
+                </h2>
+                <div class="work-grid">
+                    <a class="work-card" href="#case-1">
+                        <div class="work-thumb">
+                            <div class="dash">
+                                <div class="dash-chrome">
+                                    <div class="dots">
+                                        <span></span><span></span><span></span>
+                                    </div>
+                                    <div class="url">analytics.product.io/dashboard</div>
+                                </div>
+                                <div class="dash-body">
+                                    <div class="dash-side">
+                                        <div class="logo">◆ ACME</div>
+                                        <div class="nav-item active">Overview</div>
+                                        <div class="nav-item">Reports</div>
+                                        <div class="nav-item">Segments</div>
+                                        <div class="nav-item">Settings</div>
+                                    </div>
+                                    <div class="dash-main">
+                                        <div class="dash-h">
+                                            <div class="title">Q1 Performance</div>
+                                            <div class="pill">LIVE</div>
+                                        </div>
+                                        <div class="dash-kpis">
+                                            <div class="kpi">
+                                                <div class="lbl">Active</div>
+                                                <div class="v">12.4k</div>
+                                                <div class="delta">↑ 18%</div>
+                                            </div>
+                                            <div class="kpi">
+                                                <div class="lbl">Retention</div>
+                                                <div class="v">68%</div>
+                                                <div class="delta">↑ 4pp</div>
+                                            </div>
+                                            <div class="kpi">
+                                                <div class="lbl">MRR</div>
+                                                <div class="v">$84k</div>
+                                                <div class="delta">↑ 12%</div>
+                                            </div>
+                                        </div>
+                                        <div class="dash-chart">
+                                            <div class="clbl">Daily active users</div>
+                                            <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                                                <polyline
+                                                    fill="none"
+                                                    stroke="#ff77aa"
+                                                    stroke-width="1.5"
+                                                    points="0,22 10,18 20,20 30,14 40,16 50,10 60,12 70,8 80,9 90,5 100,7"
+                                                />
+                                                <polyline
+                                                    fill="rgba(255,119,170,0.15)"
+                                                    stroke="none"
+                                                    points="0,22 10,18 20,20 30,14 40,16 50,10 60,12 70,8 80,9 90,5 100,7 100,30 0,30"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="work-card-body">
+                            <div class="num">Case study #1 · 2024</div>
+                            <h3>Redesign B2B Analytics Dashboardu</h3>
+                            <p class="desc">
+                                Zjednodušení informační architektury,
+                                zrychlení času do prvního insightu z 4 minut
+                                na 38 sekund.
+                            </p>
+                            <span class="read">Přečíst celou case study</span>
+                        </div>
+                    </a>
+
+                    <a class="work-card" href="#case-2">
+                        <div class="work-thumb">
+                            <div class="checkout">
+                                <div class="checkout-h">
+                                    <div class="logo">◆ SHOP</div>
+                                    <div class="checkout-steps">
+                                        <span class="step done">1 cart</span>
+                                        <span class="step active">2 ship</span>
+                                        <span class="step">3 pay</span>
+                                    </div>
+                                </div>
+                                <div class="checkout-body">
+                                    <div class="checkout-form">
+                                        <div class="lbl">Email</div>
+                                        <div class="input">tereza@example.cz</div>
+                                        <div class="lbl">Adresa</div>
+                                        <div class="input">Karlín 12, Praha 8</div>
+                                        <div class="row2">
+                                            <div>
+                                                <div class="lbl">PSČ</div>
+                                                <div class="input">186 00</div>
+                                            </div>
+                                            <div>
+                                                <div class="lbl">Město</div>
+                                                <div class="input">Praha</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="checkout-summary">
+                                        <div class="stitle">Souhrn</div>
+                                        <div class="row">
+                                            <span>2× položka</span><span>1 280 Kč</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>Doprava</span><span>89 Kč</span>
+                                        </div>
+                                        <div class="total">
+                                            <div class="row" style="border: none">
+                                                <span>Celkem</span>
+                                                <span>1 369 Kč</span>
+                                            </div>
+                                        </div>
+                                        <div class="pay-btn">PŘEJÍT NA PLATBU →</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="work-card-body">
+                            <div class="num">Case study #2 · 2023</div>
+                            <h3>Optimalizace Checkout Flow E-shopu</h3>
+                            <p class="desc">
+                                A/B test třech variant. Konverze na platbě
+                                +14 %, drop-off na adresních polích −33 %.
+                            </p>
+                            <span class="read">Přečíst celou case study</span>
+                        </div>
+                    </a>
+
+                    <a class="work-card" href="#case-3">
+                        <div class="work-thumb">
+                            <div class="phone">
+                                <div class="phone-frame">
+                                    <div class="phone-status">
+                                        <span>9:41</span>
+                                        <span>●●●●● 5G</span>
+                                    </div>
+                                    <div class="phone-content">
+                                        <div class="phone-illu">
+                                            <div class="circle"></div>
+                                            <div class="square"></div>
+                                        </div>
+                                        <div class="phone-title">
+                                            Vítejte u Tvé nové banky.
+                                        </div>
+                                        <div class="phone-body">
+                                            Pojďme společně projít registrací.
+                                            Bude to rychlé — průměrně 6 minut.
+                                        </div>
+                                        <div class="phone-cta">POKRAČOVAT →</div>
+                                        <div class="phone-step">KROK 1 / 5</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="work-card-body">
+                            <div class="num">Case study #3 · 2022</div>
+                            <h3>Onboarding Mobilní Bankovní Aplikace</h3>
+                            <p class="desc">
+                                Čas registrace 14 → 6 minut. Dokončení
+                                registrace 58 % → 81 %. Plná shoda s KYC.
+                            </p>
+                            <span class="read">Přečíst celou case study</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Case detail #1 -->
+        <div class="wrap">
+            <section id="case-1" class="case-detail">
+                <div class="case-num">Case study #1 · B2B SaaS · 2024</div>
+                <h2>Redesign B2B Analytics Dashboardu</h2>
+                <div class="case-grid">
+                    <div class="case-text">
+                        <p>
+                            Vedla end-to-end redesign analytického dashboardu
+                            pro středně velký B2B SaaS produkt (~12k aktivních
+                            uživatelů). Zaměřila se na zjednodušení informační
+                            architektury a zrychlení času do prvního insightu.
+                        </p>
+                        <p>
+                            Discovery: 12 hloubkových interview s uživateli
+                            napříč segmenty (analytici, manažeři, executive).
+                            Identifikace tří jobs-to-be-done a remap navigace
+                            podle nich.
+                        </p>
+                        <p>
+                            Design: prototyp ve Figmě, validace s reálnými
+                            daty na 8 testerech, dvě iterace před handoff
+                            engineeringu.
+                        </p>
+                        <div class="case-meta-grid">
+                            <div class="item">
+                                <div class="lbl">Role</div>
+                                <div class="val">Lead UX Designer</div>
+                            </div>
+                            <div class="item">
+                                <div class="lbl">Délka</div>
+                                <div class="val">5 měsíců</div>
+                            </div>
+                            <div class="item">
+                                <div class="lbl">Doména</div>
+                                <div class="val">B2B SaaS · Analytics</div>
+                            </div>
+                            <div class="item">
+                                <div class="lbl">Tým</div>
+                                <div class="val">1 PM, 4 eng, 1 designer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="case-visual">
+                            <div class="dash">
+                                <div class="dash-chrome">
+                                    <div class="dots">
+                                        <span></span><span></span><span></span>
+                                    </div>
+                                    <div class="url">analytics.product.io/q1-overview</div>
+                                </div>
+                                <div class="dash-body">
+                                    <div class="dash-side">
+                                        <div class="logo">◆ ACME</div>
+                                        <div class="nav-item active">Overview</div>
+                                        <div class="nav-item">Reports</div>
+                                        <div class="nav-item">Segments</div>
+                                        <div class="nav-item">Audiences</div>
+                                        <div class="nav-item">Funnels</div>
+                                        <div class="nav-item">Settings</div>
+                                    </div>
+                                    <div class="dash-main">
+                                        <div class="dash-h">
+                                            <div class="title">Q1 Performance Overview</div>
+                                            <div class="pill">LIVE · 14:32</div>
+                                        </div>
+                                        <div class="dash-kpis">
+                                            <div class="kpi">
+                                                <div class="lbl">Active Users</div>
+                                                <div class="v">12 482</div>
+                                                <div class="delta">↑ 18.2% vs Q4</div>
+                                            </div>
+                                            <div class="kpi">
+                                                <div class="lbl">7-day Retention</div>
+                                                <div class="v">68%</div>
+                                                <div class="delta">↑ 4.1pp</div>
+                                            </div>
+                                            <div class="kpi">
+                                                <div class="lbl">MRR</div>
+                                                <div class="v">$84.3k</div>
+                                                <div class="delta">↑ 12.4%</div>
+                                            </div>
+                                        </div>
+                                        <div class="dash-chart">
+                                            <div class="clbl">Daily active users · last 90 days</div>
+                                            <svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                                                <polyline
+                                                    fill="rgba(255,119,170,0.15)"
+                                                    stroke="none"
+                                                    points="0,22 10,18 20,20 30,14 40,16 50,10 60,12 70,8 80,9 90,5 100,7 100,30 0,30"
+                                                />
+                                                <polyline
+                                                    fill="none"
+                                                    stroke="#ff77aa"
+                                                    stroke-width="1.5"
+                                                    points="0,22 10,18 20,20 30,14 40,16 50,10 60,12 70,8 80,9 90,5 100,7"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <div class="dash-table">
+                                            <div class="row head">
+                                                <span>Top segments</span>
+                                                <span>Users</span>
+                                                <span>Conv.</span>
+                                            </div>
+                                            <div class="row">
+                                                <span>Enterprise · EU</span>
+                                                <span>3 421</span>
+                                                <span>4.2%</span>
+                                            </div>
+                                            <div class="row">
+                                                <span>SMB · US</span>
+                                                <span>2 988</span>
+                                                <span>2.8%</span>
+                                            </div>
+                                            <div class="row">
+                                                <span>Trial · Global</span>
+                                                <span>1 642</span>
+                                                <span>1.1%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="case-impact">
+                            <div class="lbl">Dopad</div>
+                            <div class="stats">
+                                <div>
+                                    <div class="stat-num">−84%</div>
+                                    <div class="stat-lbl">čas do insightu</div>
+                                </div>
+                                <div>
+                                    <div class="stat-num">+22%</div>
+                                    <div class="stat-lbl">denní aktivace</div>
+                                </div>
+                                <div>
+                                    <div class="stat-num">9.1/10</div>
+                                    <div class="stat-lbl">user satisfaction</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Case detail #2 -->
+        <div class="wrap">
+            <section id="case-2" class="case-detail">
+                <div class="case-num">Case study #2 · E-commerce · 2023</div>
+                <h2>Optimalizace Checkout Flow E-shopu</h2>
+                <div class="case-grid">
+                    <div class="case-text">
+                        <p>
+                            Redesign tří kroků checkoutu pro středně velkou
+                            e-commerce platformu se zaměřením na snížení
+                            drop-off rate. Problém: 31 % uživatelů opouštělo
+                            v kroku zadávání adresy.
+                        </p>
+                        <p>
+                            Discovery: kvalitativní rozhovory s 8 zákazníky
+                            (mix první nákup × opakovaný), funnel analýza
+                            v GA4, heatmapy v Hotjar.
+                        </p>
+                        <p>
+                            Design: tři varianty vyrobeny pro A/B test na
+                            produkčním trafficu (~140k návštěv/měs.). Vyhrála
+                            varianta s autocomplete adresy a single-step
+                            payment.
+                        </p>
+                        <div class="case-meta-grid">
+                            <div class="item">
+                                <div class="lbl">Role</div>
+                                <div class="val">Senior UX Designer</div>
+                            </div>
+                            <div class="item">
+                                <div class="lbl">Délka</div>
+                                <div class="val">3 měsíce</div>
+                            </div>
+                            <div class="item">
+                                <div class="lbl">Doména</div>
+                                <div class="val">E-commerce</div>
+                            </div>
+                            <div class="item">
+                                <div class="lbl">Tým</div>
+                                <div class="val">1 PM, 3 eng, 1 designer, 1 analytik</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="case-visual">
+                            <div class="checkout">
+                                <div class="checkout-h">
+                                    <div class="logo">◆ SHOP / Pokladna</div>
+                                    <div class="checkout-steps">
+                                        <span class="step done">1 košík</span>
+                                        <span class="step active">2 doprava</span>
+                                        <span class="step">3 platba</span>
+                                    </div>
+                                </div>
+                                <div class="checkout-body">
+                                    <div class="checkout-form">
+                                        <div class="lbl">Kontaktní email</div>
+                                        <div class="input">tereza.n@example.cz</div>
+                                        <div class="lbl">Doručovací adresa</div>
+                                        <div class="input">Sokolovská 124, Praha 8</div>
+                                        <div class="row2">
+                                            <div>
+                                                <div class="lbl">PSČ</div>
+                                                <div class="input">186 00</div>
+                                            </div>
+                                            <div>
+                                                <div class="lbl">Město</div>
+                                                <div class="input">Praha 8</div>
+                                            </div>
+                                        </div>
+                                        <div class="lbl">Telefon</div>
+                                        <div class="input">+420 777 123 456</div>
+                                    </div>
+                                    <div class="checkout-summary">
+                                        <div class="stitle">Souhrn</div>
+                                        <div class="row">
+                                            <span>2× Lampa Skand.</span><span>1 280 Kč</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>1× Knihovna</span><span>2 490 Kč</span>
+                                        </div>
+                                        <div class="row">
+                                            <span>Doprava DPD</span><span>89 Kč</span>
+                                        </div>
+                                        <div class="total">
+                                            <div class="row" style="border: none">
+                                                <span>Celkem</span>
+                                                <span>3 859 Kč</span>
+                                            </div>
+                                        </div>
+                                        <div class="pay-btn">PŘEJÍT NA PLATBU →</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="case-impact">
+                            <div class="lbl">Dopad</div>
+                            <div class="stats">
+                                <div>
+                                    <div class="stat-num">+14%</div>
+                                    <div class="stat-lbl">konverze na platbě</div>
+                                </div>
+                                <div>
+                                    <div class="stat-num">−33%</div>
+                                    <div class="stat-lbl">drop-off adresa</div>
+                                </div>
+                                <div>
+                                    <div class="stat-num">−28%</div>
+                                    <div class="stat-lbl">support tickety</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Case detail #3 -->
+        <div class="wrap">
+            <section id="case-3" class="case-detail">
+                <div class="case-num">Case study #3 · Finanční služby · 2022</div>
+                <h2>Onboarding Mobilní Bankovní Aplikace</h2>
+                <div class="case-grid">
+                    <div class="case-text">
+                        <p>
+                            Discovery a redesign onboarding flow pro mobilní
+                            bankovnictví. Constraints: KYC compliance, AML
+                            kontroly, integrace s legacy core banking systémem.
+                        </p>
+                        <p>
+                            Discovery: 14 dní v terénu — pozorování reálných
+                            uživatelů při registraci v pobočkách. Identifikace
+                            tří hlavních friction pointů: ID scan, ověření
+                            telefonu, podpis dokumentů.
+                        </p>
+                        <p>
+                            Design: 5 iteračních kol s reálnými klienty,
+                            usability testy, accessibility audit (WCAG 2.1 AA).
+                            Compliance review se 4 oddělenými stakeholdery.
+                        </p>
+                        <div class="case-meta-grid">
+                            <div class="item">
+                                <div class="lbl">Role</div>
+                                <div class="val">UX Designer</div>
+                            </div>
+                            <div class="item">
+                                <div class="lbl">Délka</div>
+                                <div class="val">4 měsíce</div>
+                            </div>
+                            <div class="item">
+                                <div class="lbl">Doména</div>
+                                <div class="val">Finance · Mobile</div>
+                            </div>
+                            <div class="item">
+                                <div class="lbl">Tým</div>
+                                <div class="val">2 PM, 6 eng, 2 designers, 1 researcher</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="case-visual">
+                            <div class="phone">
+                                <div class="phone-frame">
+                                    <div class="phone-status">
+                                        <span>9:41</span>
+                                        <span>●●●●● 5G</span>
+                                    </div>
+                                    <div class="phone-content">
+                                        <div class="phone-illu">
+                                            <div class="circle"></div>
+                                            <div class="square"></div>
+                                        </div>
+                                        <div class="phone-title">
+                                            Vítejte v Tvé nové bance.
+                                        </div>
+                                        <div class="phone-body">
+                                            Pojďme společně projít registrací.
+                                            Bude to rychlé — průměrně 6 minut.
+                                            Připravte si občanský průkaz.
+                                        </div>
+                                        <div class="phone-cta">POKRAČOVAT →</div>
+                                        <div class="phone-step">KROK 1 / 5</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="case-impact">
+                            <div class="lbl">Dopad</div>
+                            <div class="stats">
+                                <div>
+                                    <div class="stat-num">14 → 6 min</div>
+                                    <div class="stat-lbl">čas registrace</div>
+                                </div>
+                                <div>
+                                    <div class="stat-num">58 → 81%</div>
+                                    <div class="stat-lbl">dokončení</div>
+                                </div>
+                                <div>
+                                    <div class="stat-num">100%</div>
+                                    <div class="stat-lbl">compliance</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Methodology -->
+        <div class="wrap">
+            <section>
+                <div class="section-label">05 · Methodology</div>
+                <h2>Jak tento profil <span class="it">vznikl.</span></h2>
+                <div class="methodology">
+                    <h3>Profil prošel strukturovaným assessmentem 2F Product.</h3>
+                    <p>
+                        Hodnocení vychází z 90minutové strukturované session
+                        s 2FRESH senior assessorem (15+ let praxe v UX a hiring).
+                        Profil zachycuje, jak Tereza myslí — ne jen co vyrobila.
+                    </p>
+                    <div class="components">
+                        <div class="comp">
+                            <div class="num">01</div>
+                            <div class="name">Kompetenční mapa</div>
+                            <div class="det">
+                                8 dimenzí 2FRESH frameworku, hodnoceno na
+                                reálném problému.
+                            </div>
+                        </div>
+                        <div class="comp">
+                            <div class="num">02</div>
+                            <div class="name">Design proces</div>
+                            <div class="det">
+                                Ukázky práce ze třech projektů, fokus na
+                                rozhodovací uzly.
+                            </div>
+                        </div>
+                        <div class="comp">
+                            <div class="num">03</div>
+                            <div class="name">Reference check</div>
+                            <div class="det">
+                                Dva nezávislí předchozí spolupracovníci
+                                (PM, eng).
+                            </div>
+                        </div>
+                        <div class="comp">
+                            <div class="num">04</div>
+                            <div class="name">Assessor verdict</div>
+                            <div class="det">
+                                Silné stránky, slepá místa, ideální projekt,
+                                kulturní fit.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Final CTA -->
+        <div class="wrap">
+            <section id="contact">
+                <div class="final-cta">
+                    <h2 style="color: var(--ink)">
+                        Vypadá Tereza jako fit
+                        <span
+                            class="it"
+                            style="
+                                color: var(--ink);
+                                background: var(--bg);
+                                padding: 0 0.15em;
+                            "
+                            >pro váš tým?</span
+                        >
+                    </h2>
+                    <p>
+                        Domluvíme s vámi 30minutový kalibrovaný interview.
+                        Pokud Tereza nesedí na roli, doporučíme dva další
+                        profily ze stejného segmentu zdarma.
+                    </p>
+                    <a class="btn-primary" href="mailto:hello@2fresh.cz"
+                        >Domluvit interview →</a
+                    >
+                </div>
+            </section>
+
+            <footer>
+                <div class="frow">
+                    <span><span class="heart">♥</span> 2F PRODUCT · Praha</span>
+                    <span>Profil · MOCKUP V2 · 2026-05-07 · Pouze pro koncept demo</span>
+                </div>
+                <div class="frow" style="margin-top: 1rem; font-size: 0.7rem">
+                    <span>
+                        Profilová fotografie: AI-generated portrait, fake
+                        person. Data anonymizována. Žádná osoba na obrázku
+                        ani v textu není reálná.
+                    </span>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

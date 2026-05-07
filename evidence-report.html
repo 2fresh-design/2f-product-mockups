@@ -3,6 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <title>2FRESH — Evidence Report (Pre-discovery, sample)</title>
+<style id="pw-gate-style">
+html.pw-locked body { display: none !important; }
+.pw-gate {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #FAFAFA; color: #111;
+  display: flex; align-items: center; justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  padding: 2rem;
+}
+.pw-gate-inner {
+  max-width: 440px; width: 100%; padding: 2.5rem 2rem;
+  border: 1px solid #E5E5E5; background: #fff;
+  text-align: center;
+}
+.pw-gate-mark {
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #FF77AA; margin-bottom: 1rem;
+}
+.pw-gate h1 {
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  font-size: 1.4rem; font-weight: 500; line-height: 1.25;
+  margin-bottom: 0.8rem; letter-spacing: -0.01em;
+}
+.pw-gate p {
+  font-size: 0.95rem; color: #555; line-height: 1.55;
+  margin-bottom: 1.6rem;
+}
+.pw-gate input {
+  width: 100%; padding: 0.7rem 0.9rem; font-size: 1rem;
+  border: 1.5px solid #111; background: #FAFAFA;
+  font-family: inherit; margin-bottom: 0.8rem;
+  outline: none;
+}
+.pw-gate input:focus { border-color: #FF77AA; }
+.pw-gate button {
+  width: 100%; padding: 0.7rem 0.9rem;
+  background: #111; color: #FF77AA; border: 2px solid #111;
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  font-size: 0.9rem; font-weight: 600; letter-spacing: 0.05em;
+  cursor: pointer; text-transform: uppercase;
+}
+.pw-gate button:hover { background: #FF77AA; color: #111; }
+.pw-gate-err {
+  color: #C62828; font-size: 0.85rem; margin-top: 0.8rem;
+  min-height: 1.2em;
+}
+.pw-gate-foot {
+  font-family: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  font-size: 0.7rem; letter-spacing: 0.05em; color: #999;
+  margin-top: 1.5rem;
+}
+</style>
+<script id="pw-gate-script">
+(function () {
+  var HASH = '6e430c92604c6a3cd81b3b0a36d34dab59abca31c32e131bcdf15fcad93e4352';
+  var KEY = '2fp-evidence-unlocked-2026-05-07';
+  try { if (localStorage.getItem(KEY) === '1') return; } catch (e) {}
+  document.documentElement.classList.add('pw-locked');
+  function init() {
+    var gate = document.createElement('div');
+    gate.className = 'pw-gate';
+    gate.innerHTML =
+      '<div class="pw-gate-inner">' +
+      '  <div class="pw-gate-mark">2FRESH · 2F PRODUCT</div>' +
+      '  <h1>Evidence Report</h1>' +
+      '  <p>Tento report obsahuje data z probíhajícího pre-discovery výzkumu. Zadejte přístupové heslo.</p>' +
+      '  <form id="pw-form">' +
+      '    <input id="pw-input" type="password" autocomplete="off" autofocus placeholder="Heslo" />' +
+      '    <button type="submit">Vstoupit</button>' +
+      '    <div id="pw-err" class="pw-gate-err"></div>' +
+      '  </form>' +
+      '  <div class="pw-gate-foot">Pre-discovery sprint zero · interní materiál</div>' +
+      '</div>';
+    document.documentElement.appendChild(gate);
+    async function sha256(str) {
+      var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf))
+        .map(function (b) { return b.toString(16).padStart(2, '0'); })
+        .join('');
+    }
+    document.getElementById('pw-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var input = document.getElementById('pw-input');
+      var err = document.getElementById('pw-err');
+      var v = (input.value || '').trim();
+      if (!v) return;
+      var hash = await sha256(v);
+      if (hash === HASH) {
+        try { localStorage.setItem(KEY, '1'); } catch (e2) {}
+        document.documentElement.classList.remove('pw-locked');
+        gate.remove();
+      } else {
+        err.textContent = 'Špatné heslo. Zkuste znovu.';
+        input.value = '';
+        input.focus();
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 <style>
   :root {
     --pink: #FF77AA;
