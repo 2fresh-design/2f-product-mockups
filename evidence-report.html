@@ -1258,36 +1258,8 @@ function renderBoard() {
   // 1. Intro
   const respondents = new Set(DATA.map(h => h.session));
   const cohorts = new Set(DATA.filter(h => h.cohort).map(h => h.cohort));
-  document.getElementById("board-intro").innerHTML = `
-    <div class="board-intro">
-      <div class="board-intro-meta">Pre-discovery · 2026-05-06 · ${DATA.length} vypovídavých pasáží · ${respondents.size} respondentů · ${cohorts.size} typů</div>
-      <h1 class="board-intro-title">Stav po 11 rozhovorech</h1>
-      <div class="board-intro-body">
-        <p>Po 11 hloubkových rozhovorech máme výrazně ostřejší obraz, než jsme měli na začátku. Některé hypotézy se posílily — vidíme náznaky cílové skupiny a behaviorální evidence aktuálních potřeb. Jiné ztratily ostří. Objevila se nová témata, s kterými jsme nepočítali.</p>
-        <p><strong>Tento výstup je</strong> podklad pro rozhodnutí, jestli pokračovat do koncept-testingu, nebo ještě dotáhnout discovery. <strong>Není finální go/no-go.</strong> Náš obraz je dnes kvalitativně bohatší, ale jistotu o adopci konkrétního produktu, ochotě platit konkrétní ceny, ani ekonomickém uzavření ekosystému nemáme.</p>
-      </div>
-      <div class="board-intro-divider">Tři klíčová zjištění</div>
-      <div class="summary-tiles">
-        <div class="summary-tile tile-go">
-          <div class="tile-icon">🟢</div>
-          <div class="tile-headline">Designéři praktikují self-assessment</div>
-          <div class="tile-body">15 z 19 pasáží potvrzuje, že designéři dnes různé formy assessmentu používají (vlastní matice, AI coach, peer review). Validace existující potřeby — neříká, že koupí konkrétně náš produkt.</div>
-        </div>
-        <div class="summary-tile tile-go">
-          <div class="tile-icon">🟢</div>
-          <div class="tile-headline">Senior designéři chtějí strukturovaný framework</div>
-          <div class="tile-body">13 z 15 pasáží. Leadeři už dnes hodnotitelskou práci dělají, často bez nástroje, a frustrují se. Ekonomika placeného assessoru neověřena.</div>
-        </div>
-        <div class="summary-tile tile-warn">
-          <div class="tile-icon">🟡</div>
-          <div class="tile-headline">Zaměstnavatelé ochotní platit, ale framing matters</div>
-          <div class="tile-body">10 z 14 pasáží (s verdictem) potvrzuje. Jeden explicitní Kill přišel od in-house TA, která náš mockup četla jako „agentura nahrazení“. Naše frame je kritické.</div>
-        </div>
-      </div>
-    </div>
-  `;
 
-  // 2. Hypothesis cards
+  // Compute hypsByH up front (used by tiles, h-cards, matrix)
   const hypsByH = {};
   for (const item of DATA) {
     for (const h of item.tags["Hypotézy"] || []) {
@@ -1295,6 +1267,62 @@ function renderBoard() {
       hypsByH[h].push(item);
     }
   }
+
+  // Tile stats: primary metric = respondents, secondary = passages
+  const tileStats = (h) => {
+    const items = hypsByH[h] || [];
+    const allResp = new Set();
+    const goResp = new Set();
+    let goPas = 0, totalPasWithVerdict = 0;
+    for (const it of items) {
+      if (it.session) allResp.add(it.session);
+      const vs = it.tags["Verdict"] || [];
+      if (vs.length > 0) totalPasWithVerdict++;
+      if (vs.includes("Go")) {
+        goPas++;
+        if (it.session) goResp.add(it.session);
+      }
+    }
+    return {
+      goResp: goResp.size,
+      totalResp: allResp.size,
+      goPas, totalPas: totalPasWithVerdict,
+    };
+  };
+  const sH5 = tileStats("H5");
+  const sH11 = tileStats("H11");
+  const sH6 = tileStats("H6");
+
+  document.getElementById("board-intro").innerHTML = `
+    <div class="board-intro">
+      <div class="board-intro-meta">Pre-discovery · 2026-05-06 · ${respondents.size} respondentů · ${DATA.length} vypovídavých pasáží · ${cohorts.size} typů</div>
+      <h1 class="board-intro-title">Stav po 11 rozhovorech</h1>
+      <div class="board-intro-body">
+        <p>Po 11 hloubkových rozhovorech máme výrazně ostřejší obraz než na začátku. Některé hypotézy zesílily — cílovou skupinu začínáme rozpoznávat a její chování potvrzuje aktuální potřeby. Jiné zeslábly. Objevila se nová témata, s kterými jsme nepočítali.</p>
+        <p><strong>Tento výstup je</strong> podklad pro rozhodnutí, zda pokračovat do testování konceptu, nebo ještě dotáhnout průzkumnou fázi. <strong>Není to finální rozhodnutí o pokračování.</strong> Náš obraz je dnes kvalitativně bohatší. Stále ale nevíme, zda lidé produkt přijmou, kolik za něj zaplatí, ani jestli ekosystém dává ekonomicky smysl.</p>
+      </div>
+      <div class="board-intro-divider">Tři hlavní poznatky</div>
+      <div class="summary-tiles">
+        <div class="summary-tile tile-go">
+          <div class="tile-icon">🟢</div>
+          <div class="tile-headline">Designéři praktikují sebehodnocení</div>
+          <div class="tile-body">${sH5.goResp} z ${sH5.totalResp} respondentů potvrzuje, že designéři dnes různé formy hodnocení používají (vlastní matice, AI kouč, kolegiální revize) — podloženo ${sH5.goPas} z ${sH5.totalPas} pasáží. Potvrzuje existující potřebu, neříká, že lidé koupí náš konkrétní produkt.</div>
+        </div>
+        <div class="summary-tile tile-go">
+          <div class="tile-icon">🟢</div>
+          <div class="tile-headline">Senior designéři chtějí strukturovanou metodiku</div>
+          <div class="tile-body">${sH11.goResp} z ${sH11.totalResp} respondentů (${sH11.goPas} z ${sH11.totalPas} pasáží). Lídři už dnes hodnotitelskou práci dělají, často bez nástroje, a frustrují se. Ekonomika placeného hodnotitele neověřena.</div>
+        </div>
+        <div class="summary-tile tile-warn">
+          <div class="tile-icon">🟡</div>
+          <div class="tile-headline">Zaměstnavatelé ochotní platit, ale záleží na rámci</div>
+          <div class="tile-body">${sH6.goResp} z ${sH6.totalResp} respondentů potvrzuje (${sH6.goPas} z ${sH6.totalPas} pasáží). Jeden explicitní Kill přišel od interní HR, která náš návrh četla jako „agentura nahrazení“. Náš rámec je rozhodující.</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // 2. Hypothesis cards
   const hOrder = sortHypotheses(Object.keys(HYPOTHESES), hypsByH);
   const cardsHtml = hOrder.map(h => {
     const meta = HYPOTHESES[h];
@@ -1307,12 +1335,22 @@ function renderBoard() {
     const respCount = new Set(items.map(it => it.session)).size;
     const top = topQuoteForH(items);
     const knownBullets = [];
-    if (hasVerdict) knownBullets.push(`${items.length} pasáží: <strong>${verdicts.Go} Go</strong>, ${verdicts.Kill} Kill, ${verdicts.Unknown} Unknown`);
-    else knownBullets.push(`${items.length} pasáží${items.length > 0 ? ` od ${respCount} respondentů` : ""}`);
+    if (hasVerdict) knownBullets.push(`<strong>${respCount} respondentů</strong>, ${items.length} pasáží: <strong>${verdicts.Go} Go</strong>, ${verdicts.Kill} Kill, ${verdicts.Unknown} Unknown`);
+    else knownBullets.push(`${items.length > 0 ? `<strong>${respCount} respondentů</strong>, ${items.length} pasáží` : `${items.length} pasáží`}`);
     if (items.length > 0) {
-      const cohs = {};
-      for (const it of items) if (it.cohort) cohs[it.cohort] = (cohs[it.cohort]||0)+1;
-      const cohList = Object.entries(cohs).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([c,n])=>`${c} (${n})`).join(", ");
+      const cohResp = {};
+      const cohPas = {};
+      for (const it of items) if (it.cohort) {
+        cohPas[it.cohort] = (cohPas[it.cohort]||0)+1;
+        if (!cohResp[it.cohort]) cohResp[it.cohort] = new Set();
+        if (it.session) cohResp[it.cohort].add(it.session);
+      }
+      const cohList = Object.entries(cohResp)
+        .map(([c, set]) => [c, set.size, cohPas[c]])
+        .sort((a,b) => b[1] - a[1] || b[2] - a[2])
+        .slice(0,3)
+        .map(([c, r, p]) => `${c} (${r} resp. / ${p} pas.)`)
+        .join(", ");
       if (cohList) knownBullets.push(`Nejvíc: ${cohList}`);
     }
     if (items.length === 0) knownBullets.push("Žádné pasáže — buď nebyla v rozhovorech, nebo respondenti o ní nemluvili.");
@@ -1403,8 +1441,9 @@ function renderBoard() {
     for (const h of hOrder) {
       const items = (hypsByH[h] || []).filter(it => it.cohort === coh);
       const cell = statusForCell(items);
-      const tooltip = `${coh} × ${h}: ${items.length} pasáží`;
-      matrixHtml += `<td class="cell" data-h="${h}" data-coh="${coh}" title="${escapeHtml(tooltip)}"><span class="cell-icon">${cell.icon}</span>${items.length > 0 ? `<span class="cell-count">${items.length}</span>` : ""}</td>`;
+      const cellResp = new Set(items.map(it => it.session).filter(Boolean)).size;
+      const tooltip = `${coh} × ${h}: ${cellResp} respondentů, ${items.length} pasáží`;
+      matrixHtml += `<td class="cell" data-h="${h}" data-coh="${coh}" title="${escapeHtml(tooltip)}"><span class="cell-icon">${cell.icon}</span>${items.length > 0 ? `<span class="cell-count">${cellResp}</span>` : ""}</td>`;
     }
     matrixHtml += `</tr>`;
   }
@@ -1415,7 +1454,7 @@ function renderBoard() {
       <div class="matrix">${matrixHtml}</div>
       <p style="font-size:12px;color:var(--muted);margin-top:8px;font-family:'IBM Plex Mono',monospace;">
         Legenda: 🟢 dominantní Go nebo silný směr · 🟡 mixed nebo Unknown · 🔴 Kill přítomný · ⏸️ žádné pasáže ·
-        Klik na buňku otevře evidenci filtrovanou na danou skupinu × hypotézu.
+        Číslo v buňce = počet respondentů, tooltip ukáže i počet pasáží. Klik na buňku otevře evidenci filtrovanou na danou skupinu × hypotézu.
       </p>
     </div>
   `;
