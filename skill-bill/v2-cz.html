@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Bill — Jsi ten designer, po kterém firmy touží?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --v2-purple: #A855F7;
+    --v2-pink: #EC4899;
+    --v2-cyan: #06B6D4;
+    --v2-ink: #F4F4F5;
+    --v2-ink2: #A3A3AC;
+    --v2-ink-faint: #6B6B73;
+    --v2-line: #1F1F26;
+    --v2-line2: #2D2D36;
+    --v2-surface: #0A0A0F;
+    --v2-surface-2: #0F0F15;
+    --container-px: 120px;
+    --font-display: 'Funnel Sans', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body { font-family: var(--font-body); background: var(--v2-surface); color: var(--v2-ink); line-height: 1.5; font-size: 16px; }
+
+  .container { width: 100%; padding-left: var(--container-px); padding-right: var(--container-px); }
+  .display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.025em; line-height: 1.05; }
+  .eyebrow-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 99px; background: rgba(255,255,255,0.04); border: 1px solid var(--v2-line2); font-size: 11px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--v2-ink); }
+  .eyebrow-chip .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .lede { color: var(--v2-ink2); font-size: 17px; line-height: 1.55; }
+  .btn-primary { display: inline-flex; align-items: center; justify-content: center; padding: 16px 28px; border-radius: 4px; background: var(--v2-purple); color: #fff; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: inherit; box-shadow: 0 0 32px -4px rgba(168, 85, 247, 0.4); text-decoration: none; }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-secondary { display: inline-flex; align-items: center; justify-content: center; padding: 16px 28px; border-radius: 4px; background: transparent; color: var(--v2-ink); font-weight: 500; font-size: 15px; border: 1px solid var(--v2-line2); cursor: pointer; font-family: inherit; text-decoration: none; }
+  .btn-secondary:hover { background: rgba(255,255,255,0.04); }
+  .btn-gradient { display: inline-flex; align-items: center; justify-content: center; padding: 0 28px; height: 52px; border-radius: 8px; background: linear-gradient(180deg, var(--v2-purple), var(--v2-pink)); color: #fff; font-weight: 600; font-size: 15px; border: none; cursor: pointer; font-family: var(--font-display); }
+
+  /* === Utility Bar === */
+  .util { background: #06060A; padding: 10px var(--container-px); display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+  .util-l, .util-r { display: flex; align-items: center; gap: 10px; }
+  .util-r { gap: 8px; }
+  .util-l .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--v2-pink); box-shadow: 0 0 8px var(--v2-pink); }
+  .util-l span { letter-spacing: 1.5px; color: var(--v2-ink); opacity: 0.9; font-weight: 500; }
+  .util-r .lang { font-weight: 500; letter-spacing: 1.2px; color: var(--v2-ink); font-family: 'Funnel Sans', system-ui; }
+  .util-r .lang-active { opacity: 1; }
+  .util-r .lang-link { opacity: 0.55; text-decoration: none; }
+  .util-r .lang-link:hover { opacity: 1; }
+  .util-r .lang-sep { opacity: 0.4; color: var(--v2-line2); margin: 0 2px; }
+  .util-r .sep { opacity: 0.4; color: var(--v2-line2); margin: 0 8px; }
+  .util-r .slots { font-weight: 500; letter-spacing: 1.2px; color: var(--v2-ink); opacity: 0.9; }
+
+  /* === Nav === */
+  nav.top { padding: 24px var(--container-px); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--v2-line); }
+  .nav-l { display: flex; align-items: center; gap: 10px; }
+  .nav-mark { width: 22px; height: 22px; border-radius: 4px; background: linear-gradient(135deg, var(--v2-purple), var(--v2-pink)); }
+  .nav-logo { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+  .nav-r { display: flex; align-items: center; gap: 28px; }
+  .nav-r a { color: var(--v2-ink2); text-decoration: none; font-size: 14px; }
+  .nav-r a:hover { color: var(--v2-ink); }
+  .nav-r a.nav-cta { padding: 10px 18px; border-radius: 4px; background: var(--v2-purple); color: #fff; font-weight: 600; }
+
+  /* === Hero === */
+  .hero { position: relative; padding: 96px var(--container-px) 120px; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 70% at 50% 35%, rgba(168, 85, 247, 0.28), transparent 70%); pointer-events: none; }
+  .hero-streak { position: absolute; height: 4px; width: 120%; left: -10%; filter: blur(40px); pointer-events: none; }
+  .hero-streak-1 { top: 160px; background: var(--v2-purple); opacity: 0.5; transform: rotate(6deg); }
+  .hero-streak-2 { top: 340px; background: var(--v2-pink); opacity: 0.55; transform: rotate(-4deg); }
+  .hero-streak-3 { top: 520px; background: var(--v2-cyan); opacity: 0.45; transform: rotate(8deg); height: 5px; }
+  .hero-body { position: relative; max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; align-items: center; text-align: center; }
+  .hero-eyebrow .dot { background: var(--v2-cyan); }
+  .hero-headline { font-size: 88px; line-height: 1.02; letter-spacing: -0.028em; }
+  .hero-sub { max-width: 680px; font-size: 18px; }
+  .hero-btns { display: flex; gap: 12px; padding-top: 8px; }
+
+  /* === Sections common === */
+  section.block { position: relative; padding: 120px var(--container-px); }
+  .sect-head { display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; margin: 0 auto 72px; max-width: 880px; }
+  .sect-title { font-size: 56px; }
+  .sect-sub { max-width: 620px; }
+
+  /* === Problem === */
+  .prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1100px; margin: 0 auto; }
+  .prob-card { background: var(--v2-surface-2); border: 1px solid var(--v2-line2); border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .prob-num { font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: 2px; }
+  .prob-num-1 { color: var(--v2-purple); }
+  .prob-num-2 { color: var(--v2-pink); }
+  .prob-num-3 { color: var(--v2-cyan); }
+  .prob-num-4 { color: var(--v2-purple); }
+  .prob-h { font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -0.014em; }
+  .prob-d { font-size: 14px; color: var(--v2-ink2); line-height: 1.6; }
+
+  /* === Solution === */
+  .pillars { display: flex; flex-direction: column; gap: 24px; max-width: 1100px; margin: 0 auto; }
+  .pillar { background: var(--v2-surface-2); border: 1px solid var(--v2-line2); border-radius: 8px; padding: 32px 28px; display: flex; flex-direction: column; gap: 20px; }
+  .pillar-mark { width: 36px; height: 36px; border-radius: 6px; }
+  .pillar-mark-1 { background: linear-gradient(135deg, var(--v2-purple), rgba(168, 85, 247, 0.3)); }
+  .pillar-mark-2 { background: linear-gradient(135deg, var(--v2-pink), rgba(236, 72, 153, 0.3)); }
+  .pillar-mark-3 { background: linear-gradient(135deg, var(--v2-cyan), rgba(6, 182, 212, 0.3)); }
+  .pillar-num { font-size: 10px; font-weight: 500; letter-spacing: 2.5px; color: var(--v2-ink-faint); text-transform: uppercase; }
+  .pillar-h { font-family: var(--font-display); font-size: 24px; font-weight: 600; letter-spacing: -0.018em; }
+  .pillar-d { font-size: 14px; color: var(--v2-ink2); line-height: 1.6; }
+
+  /* === How it works === */
+  .how-list { max-width: 900px; margin: 0 auto; border-top: 1px solid var(--v2-line2); }
+  .how-row { display: flex; align-items: center; gap: 48px; padding: 36px 0; border-bottom: 1px solid var(--v2-line2); }
+  .how-num { font-family: var(--font-display); font-size: 48px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; min-width: 80px; }
+  .how-num-1 { color: var(--v2-purple); }
+  .how-num-2 { color: var(--v2-pink); }
+  .how-num-3 { color: var(--v2-cyan); }
+  .how-num-4 { color: var(--v2-purple); }
+  .how-mid { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .how-h { font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -0.014em; }
+  .how-d { font-size: 14px; color: var(--v2-ink2); line-height: 1.6; }
+  .how-meta { font-size: 11px; font-weight: 500; letter-spacing: 2px; color: var(--v2-ink-faint); text-align: right; min-width: 90px; text-transform: uppercase; }
+
+  /* === For whom === */
+  .whom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1100px; margin: 0 auto; }
+  .whom-col { border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+  .whom-col-yes { background: rgba(168, 85, 247, 0.06); border: 1px solid var(--v2-purple); }
+  .whom-col-no { background: var(--v2-surface-2); border: 1px solid var(--v2-line2); }
+  .whom-head-row { display: flex; align-items: center; gap: 12px; }
+  .whom-mark { width: 24px; height: 24px; border-radius: 4px; }
+  .whom-mark-yes { background: var(--v2-purple); }
+  .whom-mark-no { background: var(--v2-line2); }
+  .whom-head { font-family: var(--font-display); font-size: 24px; font-weight: 600; letter-spacing: -0.018em; }
+  .whom-head-no { color: var(--v2-ink2); }
+  .whom-list { display: flex; flex-direction: column; gap: 14px; }
+  .whom-item { font-size: 15px; color: var(--v2-ink); line-height: 1.55; }
+
+  /* === Why us === */
+  .why-body { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1100px; margin: 0 auto; }
+  .why-col { display: flex; flex-direction: column; gap: 18px; }
+  .why-head { font-size: 10px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; }
+  .why-head-1 { color: var(--v2-purple); }
+  .why-head-2 { color: var(--v2-cyan); }
+  .why-h { font-family: var(--font-display); font-size: 24px; font-weight: 600; letter-spacing: -0.018em; line-height: 1.2; }
+  .why-d { font-size: 15px; color: var(--v2-ink2); line-height: 1.6; }
+  .why-stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--v2-line2); border-bottom: 1px solid var(--v2-line2); max-width: 1100px; margin: 64px auto 0; }
+  .stat { display: flex; flex-direction: column; gap: 6px; align-items: center; padding: 32px 0; text-align: center; }
+  .stat-mid { border-left: 1px solid var(--v2-line2); border-right: 1px solid var(--v2-line2); }
+  .stat-n { font-family: var(--font-display); font-size: 56px; font-weight: 600; letter-spacing: -0.035em; line-height: 1; }
+  .stat-n-1 { color: var(--v2-purple); }
+  .stat-n-2 { color: var(--v2-pink); }
+  .stat-n-3 { color: var(--v2-cyan); }
+  .stat-l { font-size: 10px; font-weight: 500; letter-spacing: 2px; color: var(--v2-ink-faint); text-transform: uppercase; }
+
+  /* === Early Access === */
+  .ea { background: var(--v2-surface); padding: 100px var(--container-px); text-align: center; }
+  .ea-inner { display: flex; flex-direction: column; gap: 24px; align-items: center; max-width: 840px; margin: 0 auto; }
+  .ea-h { font-size: 56px; }
+  .ea-sub { max-width: 640px; font-size: 17px; line-height: 1.6; }
+
+  /* === FAQ === */
+  .faq-list { max-width: 820px; margin: 0 auto; border-top: 1px solid var(--v2-line2); }
+  .faq-item { padding: 28px 0; border-bottom: 1px solid var(--v2-line2); }
+  .faq-item summary { display: flex; justify-content: space-between; align-items: center; gap: 24px; cursor: pointer; list-style: none; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-q { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.014em; }
+  .faq-toggle { font-family: var(--font-display); font-size: 24px; font-weight: 500; color: var(--v2-ink-faint); transition: transform 0.2s; }
+  .faq-item[open] .faq-toggle { transform: rotate(45deg); }
+  .faq-a { margin-top: 14px; font-size: 14px; color: var(--v2-ink2); line-height: 1.6; }
+
+  /* === Final CTA === */
+  .cta { padding: 160px var(--container-px); display: flex; justify-content: center; }
+  .cta-inner { background: var(--v2-surface-2); border: 1px solid var(--v2-line2); border-radius: 16px; padding: 80px 72px; box-shadow: 0 0 120px rgba(168, 85, 247, 0.25); display: flex; flex-direction: column; gap: 32px; align-items: center; max-width: 920px; width: 100%; text-align: center; }
+  .cta-chip { display: inline-flex; padding: 8px 16px; border-radius: 99px; background: rgba(255,255,255,0.04); border: 1px solid var(--v2-line2); font-size: 11px; font-weight: 500; letter-spacing: 1.6px; color: var(--v2-ink2); }
+  .cta-h { font-size: 64px; }
+  .cta-sub { color: var(--v2-ink2); font-size: 17px; line-height: 1.6; }
+  .cta-form { display: flex; flex-direction: column; gap: 8px; width: 520px; max-width: 100%; padding-top: 8px; }
+  .cta-form input { height: 52px; padding: 0 20px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--v2-line2); color: var(--v2-ink); font-family: inherit; font-size: 14px; outline: none; }
+  .cta-form input::placeholder { color: var(--v2-ink-faint); }
+  .cta-note { font-size: 12px; color: var(--v2-ink-faint); }
+
+  /* === Footer === */
+  footer.foot { background: var(--v2-surface); padding: 80px var(--container-px) 48px; border-top: 1px solid var(--v2-line2); }
+  .foot-top { display: flex; justify-content: space-between; gap: 80px; }
+  .foot-brand { max-width: 320px; display: flex; flex-direction: column; gap: 16px; }
+  .foot-brand-row { display: flex; align-items: center; gap: 10px; }
+  .foot-brand-mark { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(45deg, var(--v2-purple), var(--v2-pink)); }
+  .foot-brand-name { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+  .foot-brand-desc { font-size: 13px; color: var(--v2-ink2); line-height: 1.6; }
+  .foot-cols { display: flex; gap: 64px; }
+  .foot-col { display: flex; flex-direction: column; gap: 14px; }
+  .foot-col-head { font-size: 11px; font-weight: 500; letter-spacing: 1.4px; color: var(--v2-ink-faint); text-transform: uppercase; }
+  .foot-col a { font-size: 14px; color: var(--v2-ink2); text-decoration: none; }
+  .foot-col a:hover { color: var(--v2-ink); }
+  .foot-bot { display: flex; justify-content: space-between; padding-top: 24px; margin-top: 32px; border-top: 1px solid var(--v2-line2); font-size: 12px; color: var(--v2-ink-faint); }
+  .foot-socials { display: flex; gap: 20px; }
+  .foot-socials a { color: var(--v2-ink2); text-decoration: none; }
+
+  /* === Responsive === */
+  @media (max-width: 1100px) {
+    :root { --container-px: 48px; }
+    .hero-headline { font-size: 56px; }
+    .sect-title { font-size: 36px; }
+    .cta-h { font-size: 40px; }
+    .prob-grid { grid-template-columns: 1fr; }
+    .whom-grid { grid-template-columns: 1fr; }
+    .why-body { grid-template-columns: 1fr; gap: 48px; }
+    .why-stats { grid-template-columns: 1fr; }
+    .stat-mid { border-left: none; border-right: none; border-top: 1px solid var(--v2-line2); border-bottom: 1px solid var(--v2-line2); }
+    .foot-top { flex-direction: column; }
+    .foot-cols { flex-wrap: wrap; }
+  }
+  @media (max-width: 640px) {
+    :root { --container-px: 20px; }
+    section.block { padding: 64px var(--container-px); }
+    .hero { padding: 56px var(--container-px) 80px; }
+    .hero-headline { font-size: 40px; }
+    .ea-h { font-size: 36px; }
+    .cta-h { font-size: 32px; }
+    .cta-inner { padding: 48px 28px; }
+    .how-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .how-meta { text-align: left; }
+    .hero-btns { flex-direction: column; width: 100%; }
+    .hero-btns a { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- === Utility Bar === -->
+<div class="util">
+  <div class="util-l">
+    <span class="dot"></span>
+    <span>EARLY ACCESS · NYNÍ OTEVŘENO · 50 % OFF PRO PRVNÍCH 100</span>
+  </div>
+  <div class="util-r">
+    <span class="lang lang-active">CZ</span>
+    <span class="lang-sep">/</span>
+    <a class="lang lang-link" href="v2-en.html">EN</a>
+    <span class="sep">·</span>
+    <span class="slots">94 / 100 míst zbývá</span>
+  </div>
+</div>
+
+<!-- === Nav === -->
+<nav class="top">
+  <div class="nav-l">
+    <div class="nav-mark"></div>
+    <div class="nav-logo">Skill Bill</div>
+  </div>
+  <div class="nav-r">
+    <a href="#how">Jak to funguje</a>
+    <a href="#whom">Pro koho</a>
+    <a href="#ea">Cena</a>
+    <a href="#cta" class="nav-cta">Získat přístup</a>
+  </div>
+</nav>
+
+<!-- === Hero === -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-streak hero-streak-1"></div>
+  <div class="hero-streak hero-streak-2"></div>
+  <div class="hero-streak hero-streak-3"></div>
+  <div class="hero-body">
+    <div class="eyebrow-chip hero-eyebrow"><span class="dot"></span>Pro mid–senior designery</div>
+    <h1 class="display hero-headline">Jsi ten designer, po kterém firmy touží?</h1>
+    <p class="lede hero-sub">Trh designerů se mění rychleji než kdy dřív. Skill Bill ti pomůže zhodnotit, kde stojíš, a postavit plán, jak zůstat relevantní v éře AI.</p>
+    <div class="hero-btns">
+      <a href="#cta" class="btn-primary">Získat Early Access</a>
+      <a href="#how" class="btn-secondary">Jak to funguje</a>
+    </div>
+  </div>
+</section>
+
+<!-- === Problem === -->
+<section class="block">
+  <div class="sect-head">
+    <div class="eyebrow-chip"><span class="dot" style="background: var(--v2-pink);"></span>Bolest dneska</div>
+    <h2 class="display sect-title">Tohle ti zní povědomě.</h2>
+    <p class="lede sect-sub">Čtyři okamžiky, ve kterých se právě teď točí spousta mid–senior designerů.</p>
+  </div>
+  <div class="prob-grid">
+    <div class="prob-card">
+      <div class="prob-num prob-num-1">01</div>
+      <div class="prob-h">Rozhodovací paralýza u JD.</div>
+      <div class="prob-d">Nevíš, jestli má smysl reagovat. Jestli tě firma vážně chce, nebo je to generický inzerát s deseti checkboxy navíc.</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-num prob-num-2">02</div>
+      <div class="prob-h">Hodiny v případovce. Nula odezvy.</div>
+      <div class="prob-d">Investoval jsi víkend a večery do portfolia, které někdo otevřel na šest sekund. A pak ticho.</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-num prob-num-3">03</div>
+      <div class="prob-h">V rozvoji se točíš na místě.</div>
+      <div class="prob-d">Tutoriály, kurzy, články. Pocit, že seš zaneprázdněný, ale nikam to nevede. Bez struktury, co dál.</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-num prob-num-4">04</div>
+      <div class="prob-h">AI tlačí. Ty nevíš, kde stojíš.</div>
+      <div class="prob-d">Slyšíš, že se obor mění. Vidíš to. Ale chybí ti vlastní souřadnice — kam se posouvat a co si zachovat.</div>
+    </div>
+  </div>
+</section>
+
+<!-- === Solution === -->
+<section class="block">
+  <div class="sect-head">
+    <div class="eyebrow-chip"><span class="dot" style="background: var(--v2-purple);"></span>Co Skill Bill dělá</div>
+    <h2 class="display sect-title">Tři pilíře. Jedna mapa.</h2>
+    <p class="lede sect-sub">Skill Bill ti nedá známku ze známé školy. Dá ti strukturované zrcadlo, plán a průvodce — všechny tři současně.</p>
+  </div>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-mark pillar-mark-1"></div>
+      <div class="pillar-num">01 — Assessment</div>
+      <div class="pillar-h">Strukturované zrcadlo.</div>
+      <div class="pillar-d">Zhodnotíš, kde stojíš proti měnícímu se trhu. Ne známka, ale poctivý pohled na tvoje silné stránky a slepá místa.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-mark pillar-mark-2"></div>
+      <div class="pillar-num">02 — Plán rozvoje</div>
+      <div class="pillar-h">Konkrétní další krok.</div>
+      <div class="pillar-d">Podle toho, kam míříš. Ne obecné rady ze stovky článků, ale tvoje cesta — postavená na tom, co o tobě Skill Bill ví.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-mark pillar-mark-3"></div>
+      <div class="pillar-num">03 — AI průvodce</div>
+      <div class="pillar-h">S tebou, ne jednou.</div>
+      <div class="pillar-d">Skill Bill je pokračovaný průvodce, ne jednorázový test. Plus přístup k živému člověku, když to chce víc než algoritmus.</div>
+    </div>
+  </div>
+</section>
+
+<!-- === How it works === -->
+<section class="block" id="how">
+  <div class="sect-head">
+    <div class="eyebrow-chip"><span class="dot" style="background: var(--v2-cyan);"></span>Jak to funguje</div>
+    <h2 class="display sect-title">Čtyři kroky. Jedna mapa cesty.</h2>
+    <p class="lede sect-sub">Bez složitých forem. Bez 200 otázek. Začneš tam, kde reálně stojíš.</p>
+  </div>
+  <div class="how-list">
+    <div class="how-row">
+      <div class="how-num how-num-1">01</div>
+      <div class="how-mid">
+        <div class="how-h">Přihlas se do Early Access.</div>
+        <div class="how-d">Email a jedna otevřená otázka. Zaplatíš až ve chvíli, kdy budeš mít přístup — a za zvýhodněnou cenu.</div>
+      </div>
+      <div class="how-meta">~ 2 min</div>
+    </div>
+    <div class="how-row">
+      <div class="how-num how-num-2">02</div>
+      <div class="how-mid">
+        <div class="how-h">První assessment.</div>
+        <div class="how-d">Otázky o tvojí praxi, cílech a vztahu k AI. Strukturovaná konverzace, ne formulář. Skill Bill se ptá, ty odpovídáš slovy.</div>
+      </div>
+      <div class="how-meta">~ 30 min</div>
+    </div>
+    <div class="how-row">
+      <div class="how-num how-num-3">03</div>
+      <div class="how-mid">
+        <div class="how-h">Tvoje mapa cesty.</div>
+        <div class="how-d">Skill Bill vygeneruje pracovní plán: kde jsi, kam můžeš jít a co tě tam dostane. Žádné obecné cesty — tvoje cesta.</div>
+      </div>
+      <div class="how-meta">Okamžitě</div>
+    </div>
+    <div class="how-row">
+      <div class="how-num how-num-4">04</div>
+      <div class="how-mid">
+        <div class="how-h">Průběžné konzultace.</div>
+        <div class="how-d">Skill Bill je s tebou dál — kdykoli to chce. Plus volitelně přístup k živému člověku, když potřebuješ pohled, který algoritmus neumí.</div>
+      </div>
+      <div class="how-meta">Průběžně</div>
+    </div>
+  </div>
+</section>
+
+<!-- === For whom === -->
+<section class="block" id="whom">
+  <div class="sect-head">
+    <div class="eyebrow-chip"><span class="dot" style="background: var(--v2-pink);"></span>Pro koho</div>
+    <h2 class="display sect-title">Pozná se v tom ten správný.</h2>
+    <p class="lede sect-sub">Skill Bill stavíme pro konkrétní lidi. Pokud se v tom poznáš, máme tě.</p>
+  </div>
+  <div class="whom-grid">
+    <div class="whom-col whom-col-yes">
+      <div class="whom-head-row">
+        <div class="whom-mark whom-mark-yes"></div>
+        <div class="whom-head">Pro tebe</div>
+      </div>
+      <div class="whom-list">
+        <div class="whom-item">Designuješ 5+ let a cítíš, že stagnuješ.</div>
+        <div class="whom-item">Vidíš, že AI mění hru, ale nevíš, jak se v tom postavit.</div>
+        <div class="whom-item">Hledáš další krok ve své kariéře — a strukturu, jak ho najít.</div>
+        <div class="whom-item">Nejsi začátečník, ale necítíš se ani jako senior s vlastním systémem.</div>
+      </div>
+    </div>
+    <div class="whom-col whom-col-no">
+      <div class="whom-head-row">
+        <div class="whom-mark whom-mark-no"></div>
+        <div class="whom-head whom-head-no">Asi ne pro tebe</div>
+      </div>
+      <div class="whom-list">
+        <div class="whom-item">Máš vlastní framework a víš, kam míříš.</div>
+        <div class="whom-item">Začínáš s designem od nuly a potřebuješ základy.</div>
+        <div class="whom-item">Chceš hotové šablony a rychlé výhry.</div>
+        <div class="whom-item">Necítíš žádný tlak růst nebo se přizpůsobit AI.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === Why us === -->
+<section class="block">
+  <div class="sect-head">
+    <div class="eyebrow-chip"><span class="dot" style="background: var(--v2-purple);"></span>Proč my · Proč teď</div>
+    <h2 class="display sect-title">Učíme se to s vámi, ne místo vás.</h2>
+  </div>
+  <div class="why-body">
+    <div class="why-col">
+      <div class="why-head why-head-1">2FRESH</div>
+      <div class="why-h">Pražská designová agentura. Dvacet let praxe. Zhruba padesát lidí.</div>
+      <div class="why-d">Skill Bill vznikl z toho, co řešíme interně s vlastními designery i s klienty. Nedělíme se o teorii — sdílíme to, co jsme sami prošli.</div>
+    </div>
+    <div class="why-col">
+      <div class="why-head why-head-2">Proč teď</div>
+      <div class="why-h">AI mění obor jednoznačně. Naléhavost je strukturální, ne hypotetická.</div>
+      <div class="why-d">Skill Bill je pokus dát designerům nástroj, kterým můžou na změnu reagovat aktivně. Upřímně: nikdo dnes nemá v této oblasti hotovou expertízu. My ji s tebou skládáme.</div>
+    </div>
+  </div>
+  <div class="why-stats">
+    <div class="stat">
+      <div class="stat-n stat-n-1">20+</div>
+      <div class="stat-l">Let praxe</div>
+    </div>
+    <div class="stat stat-mid">
+      <div class="stat-n stat-n-2">50</div>
+      <div class="stat-l">Lidí v týmu</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n stat-n-3">7</div>
+      <div class="stat-l">Rozhovorů v discovery</div>
+    </div>
+  </div>
+</section>
+
+<!-- === Early Access === -->
+<section class="ea" id="ea">
+  <div class="ea-inner">
+    <div class="eyebrow-chip">Early Access</div>
+    <h2 class="display ea-h">Early Access</h2>
+    <p class="lede ea-sub">Skill Bill spouštíme jako placené předplatné. Early Access členové dostanou exkluzivní cenu, kterou pošleme e-mailem před spuštěním. Bez závazku.</p>
+  </div>
+</section>
+
+<!-- === FAQ === -->
+<section class="block">
+  <div class="sect-head">
+    <div class="eyebrow-chip"><span class="dot" style="background: var(--v2-pink);"></span>Otázky</div>
+    <h2 class="display sect-title">Co se ptají ostatní.</h2>
+  </div>
+  <div class="faq-list">
+    <details class="faq-item" open>
+      <summary><span class="faq-q">Co je Skill Bill v Early Access fázi?</span><span class="faq-toggle">+</span></summary>
+      <div class="faq-a">Early Access znamená, že produkt teprve dokončujeme. Vstupuješ jako jeden z prvních 100 lidí — dostaneš včasný přístup, exkluzivní cenu a možnost ovlivnit, kam Skill Bill míří.</div>
+    </details>
+    <details class="faq-item" open>
+      <summary><span class="faq-q">Jak je to s AI? Nahradí mě?</span><span class="faq-toggle">+</span></summary>
+      <div class="faq-a">Nahradí ty, kdo zůstanou u pixelového řemesla. Skill Bill tě posune k tomu, co AI neumí — kontext, rozhodování, leadership.</div>
+    </details>
+    <details class="faq-item">
+      <summary><span class="faq-q">Komu Skill Bill nepomůže?</span><span class="faq-toggle">+</span></summary>
+      <div class="faq-a">Juniorům, kteří hledají základy. Lidem, co chtějí hotové šablony. Těm, kdo necítí žádný tlak se posunout.</div>
+    </details>
+    <details class="faq-item">
+      <summary><span class="faq-q">Kdy spouštíte?</span><span class="faq-toggle">+</span></summary>
+      <div class="faq-a">Plné spuštění chystáme na podzim 2026. Early Access členové dostanou přístup před oficiálním launchem a cenu, která se zafixuje doživotně.</div>
+    </details>
+  </div>
+</section>
+
+<!-- === Final CTA === -->
+<section class="cta" id="cta">
+  <div class="cta-inner">
+    <div class="cta-chip">PŘIDEJ SE K EARLY ACCESS</div>
+    <h2 class="display cta-h">Kde budeš za rok?</h2>
+    <p class="cta-sub">Začni dnes. Příští květen ti poděkuje.</p>
+    <form class="cta-form" onsubmit="event.preventDefault(); alert('Díky! (placeholder — zatím nenapojené)');">
+      <input type="email" placeholder="tvuj@email.cz" required>
+      <button type="submit" class="btn-gradient">Chci dovnitř</button>
+    </form>
+    <div class="cta-note">Bez kreditky. Zrušit můžeš kdykoli.</div>
+  </div>
+</section>
+
+<!-- === Footer === -->
+<footer class="foot">
+  <div class="foot-top">
+    <div class="foot-brand">
+      <div class="foot-brand-row">
+        <div class="foot-brand-mark"></div>
+        <div class="foot-brand-name">Skill Bill</div>
+      </div>
+      <div class="foot-brand-desc">Roadmapa k designerovi, kterého firmy hledají.</div>
+    </div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <div class="foot-col-head">Produkt</div>
+        <a href="#how">Roadmapa</a>
+        <a href="#whom">Pro koho</a>
+        <a href="#ea">Ceník</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-col-head">Firma</div>
+        <a href="https://2fresh.cz" target="_blank" rel="noopener">2FRESH</a>
+        <a href="mailto:hello@2fresh.cz">Kontakt</a>
+        <a href="#">Newsletter</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-col-head">Právní</div>
+        <a href="#">Zásady soukromí</a>
+        <a href="#">Podmínky</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span>© 2026 2FRESH. Vyrobeno v Praze.</span>
+    <div class="foot-socials">
+      <a href="#">LinkedIn</a>
+      <a href="#">X</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
