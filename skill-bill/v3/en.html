@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Bill: do you know where you're headed?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* =======================================================================
+     SKILL BILL — landing page (usefulness test, EN)
+     Verze: 2026-06-03 v3 — anglická verze, odvozená z CZ
+     Vizuální styl: Skill Bill identita z Pencil mockupu
+                    (Playfair Display + Inter, zemitá oranžová/zlatá/zelená)
+     Pozn.: Veškerý text je přímo v HTML níže (ne v JS), ať se snadno edituje.
+     ======================================================================= */
+
+  :root {
+    --accent:   #E26B3B;  /* oranžová */
+    --accent-2: #E8B548;  /* zlatá */
+    --accent-3: #6F8F7A;  /* zelená */
+    --ink:        #161413;
+    --ink-2:      #4A4642;
+    --ink-faint:  #8E867F;
+    --line:       #E5DFD7;
+    --surface:      #FBF9F5;
+    --surface-tint: #F2EDE4;
+    --inverse:    #1A1816;
+    --pad-x: clamp(24px, 8vw, 140px);
+    --display: 'Playfair Display', Georgia, serif;
+    --body: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+  body { font-family: var(--body); background: var(--surface); color: var(--ink); line-height: 1.5; font-size: 16px; overflow-x: hidden; }
+
+  .wrap { width: 100%; padding-left: var(--pad-x); padding-right: var(--pad-x); }
+  .display { font-family: var(--display); font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; }
+  .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; }
+  .lede { font-size: 17px; color: var(--ink-2); line-height: 1.55; }
+  .micro { font-size: 12px; color: var(--ink-faint); letter-spacing: 0.5px; }
+
+  /* staggered page-load reveal */
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .rise { opacity: 0; animation: rise 0.7s cubic-bezier(.2,.7,.2,1) forwards; }
+  .d1 { animation-delay: .05s; } .d2 { animation-delay: .15s; } .d3 { animation-delay: .25s; } .d4 { animation-delay: .35s; }
+
+  /* primární tlačítko (vyplněné) */
+  .btn { display: inline-flex; align-items: center; gap: 10px; justify-content: center; padding: 15px 28px; border-radius: 9999px; background: var(--accent); color: #fff; font-weight: 600; font-size: 15px; text-decoration: none; border: none; cursor: pointer; font-family: inherit; transition: filter .2s, transform .2s, background .2s; }
+  .btn:hover { filter: brightness(0.96); }
+  .btn .arr { transition: transform .2s; }
+  .btn:hover .arr { transform: translateX(4px); }
+  .btn-light { background: var(--accent-2); color: var(--ink); }
+  .btn-light:hover { background: #fff; }
+
+  /* sjednocené sekundární tlačítko (ghost) — stejné v hlavičce i v heru */
+  .btn-ghost { display: inline-flex; align-items: center; gap: 10px; justify-content: center; font-size: 13px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; color: var(--ink); padding: 13px 24px; border: 1.5px solid var(--line); border-radius: 999px; background: transparent; cursor: pointer; font-family: inherit; transition: all .2s; }
+  .btn-ghost:hover { background: var(--surface-tint); }
+  .btn-ghost .arr { transition: transform .2s; }
+  .btn-ghost:hover .arr { transform: translateX(4px); }
+
+  /* =========================== NAV =========================== */
+  header.site { position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,0.82); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav { display: flex; justify-content: space-between; align-items: center; padding-top: 18px; padding-bottom: 18px; }
+  .nav-l { display: flex; align-items: center; gap: 10px; }
+  .nav-mark { width: 22px; height: 22px; border-radius: 5px; background: var(--accent); }
+  .nav-logo { font-family: var(--display); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .nav-by { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-faint); }
+  .nav-r { display: flex; align-items: center; gap: 20px; }
+  .lang { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; }
+  .lang-active { color: var(--ink); font-weight: 700; }
+  .lang-sep { color: var(--ink-faint); }
+  .lang-link { color: var(--ink-faint); text-decoration: none; transition: color .2s; }
+  .lang-link:hover { color: var(--accent); }
+
+  /* =========================== HERO =========================== */
+  .hero { position: relative; padding: clamp(56px, 9vw, 110px) 0 clamp(64px, 10vw, 120px); overflow: hidden; }
+  .hero-inner { position: relative; z-index: 2; max-width: 960px; }
+  .hero-eyebrow { color: var(--accent); margin-bottom: 26px; display: inline-flex; align-items: center; gap: 12px; }
+  .hero-eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--accent); display: inline-block; }
+  .hero h1 { font-size: clamp(38px, 6.6vw, 80px); line-height: 1.04; letter-spacing: -0.025em; max-width: 15ch; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { margin-top: 30px; font-size: clamp(17px, 1.9vw, 21px); color: var(--ink-2); max-width: 56ch; line-height: 1.6; }
+  .hero-actions { margin-top: 42px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+  /* Decorative scattered rectangles — Skill Bill signature motif */
+  .deco { position: absolute; top: 80px; right: -20px; width: 320px; height: 420px; pointer-events: none; z-index: 1; opacity: 0.9; }
+  .deco span { position: absolute; display: block; }
+  .deco span:nth-child(1)  { background: var(--accent);   opacity: 0.16; width: 96px;  height: 60px; top: 0;    right: 80px; }
+  .deco span:nth-child(2)  { background: var(--accent-2); opacity: 0.22; width: 64px;  height: 44px; top: 14px; right: 0; }
+  .deco span:nth-child(3)  { background: var(--accent-3); opacity: 0.18; width: 72px;  height: 78px; top: 78px; right: 96px; }
+  .deco span:nth-child(4)  { background: var(--accent-2); opacity: 0.16; width: 88px;  height: 50px; top: 70px; right: 0; }
+  .deco span:nth-child(5)  { background: var(--accent);   opacity: 0.2;  width: 60px;  height: 64px; top: 150px; right: 60px; }
+  .deco span:nth-child(6)  { background: var(--accent-3); opacity: 0.14; width: 80px;  height: 42px; top: 168px; right: 150px; }
+  .deco span:nth-child(7)  { background: var(--accent);   opacity: 0.18; width: 100px; height: 58px; top: 240px; right: 14px; }
+  .deco span:nth-child(8)  { background: var(--accent-2); opacity: 0.22; width: 50px;  height: 74px; top: 226px; right: 124px; }
+  .deco span:nth-child(9)  { background: var(--accent-3); opacity: 0.18; width: 66px;  height: 48px; top: 326px; right: 70px; }
+  .deco span:nth-child(10) { background: var(--accent);   opacity: 0.14; width: 78px;  height: 52px; top: 336px; right: 0; }
+
+  /* =========================== SECTION SHELL =========================== */
+  section.block { padding: clamp(64px, 9vw, 110px) 0; }
+  .block.tint { background: var(--surface-tint); }
+  .sec-label { margin-bottom: 18px; }
+  .sec-title { font-size: clamp(28px, 3.8vw, 46px); line-height: 1.12; letter-spacing: -0.02em; max-width: 22ch; }
+
+  /* =========================== HOW IT WORKS =========================== */
+  .steps { margin-top: 56px; border-top: 1px solid var(--line); }
+  .step { display: grid; grid-template-columns: 110px 1fr; gap: clamp(20px, 4vw, 48px); padding: 36px 0; border-bottom: 1px solid var(--line); align-items: start; transition: background .25s; }
+  .step:hover { background: rgba(226,107,59,0.04); }
+  .step-num { font-family: var(--display); font-weight: 500; font-size: 60px; line-height: 0.9; letter-spacing: -0.03em; }
+  .step-num.c1 { color: var(--accent); }
+  .step-num.c2 { color: var(--accent-2); }
+  .step-num.c3 { color: var(--accent-3); }
+  .step-num.c4 { color: var(--accent); }
+  .step-h { font-family: var(--display); font-size: clamp(22px, 2.6vw, 28px); font-weight: 500; letter-spacing: -0.014em; margin-bottom: 8px; }
+  .step-d { color: var(--ink-2); font-size: 15.5px; line-height: 1.55; max-width: 62ch; }
+
+  /* =========================== WHO'S BEHIND IT =========================== */
+  .about-grid { display: grid; grid-template-columns: 0.85fr 1.4fr; gap: clamp(32px, 6vw, 80px); align-items: start; margin-top: 12px; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stat { padding: 26px 0; }
+  .stat:first-child { border-right: 1px solid var(--line); padding-right: 20px; }
+  .stat:last-child { padding-left: 24px; }
+  .stat-n { font-family: var(--display); font-weight: 500; font-size: clamp(44px, 5.4vw, 60px); line-height: 1; letter-spacing: -0.03em; }
+  .stat-n.c1 { color: var(--accent); }
+  .stat-n.c3 { color: var(--accent-3); }
+  .stat-l { font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-faint); margin-top: 8px; }
+  .about-body p { font-family: var(--display); font-weight: 500; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.32; letter-spacing: -0.012em; }
+  .about-body p + p { margin-top: 22px; font-family: var(--body); font-weight: 400; font-size: clamp(15px, 1.7vw, 17px); line-height: 1.6; color: var(--ink-2); letter-spacing: 0; }
+
+  /* =========================== WHO IT'S FOR =========================== */
+  .whom-list { margin-top: 48px; max-width: 900px; }
+  .whom-item { display: flex; gap: 24px; align-items: baseline; padding: 26px 0; border-top: 1px solid var(--line); }
+  .whom-item:last-child { border-bottom: 1px solid var(--line); }
+  .whom-mark { color: var(--accent); font-size: 22px; flex-shrink: 0; line-height: 1.2; }
+  .whom-text { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 2.3vw, 26px); line-height: 1.3; letter-spacing: -0.014em; }
+
+  /* =========================== FINAL / SOFT CTA =========================== */
+  .final { background: var(--inverse); color: #fff; }
+  .final .eyebrow { color: var(--accent-2); }
+  .final h2 { font-size: clamp(30px, 4.8vw, 58px); line-height: 1.08; letter-spacing: -0.025em; max-width: 18ch; margin-top: 16px; margin-bottom: 16px; color: #fff; }
+  .final p.lead { color: #B9B2AA; font-size: clamp(17px, 1.9vw, 20px); max-width: 50ch; line-height: 1.55; }
+  .form { margin-top: 42px; display: flex; gap: 12px; max-width: 540px; flex-wrap: wrap; }
+  .form input { flex: 1; min-width: 220px; padding: 17px 20px; border-radius: 10px; border: 1.5px solid #3A352F; background: #262019; color: #fff; font-family: inherit; font-size: 15px; outline: none; transition: border-color .2s; }
+  .form input::placeholder { color: #8E867F; }
+  .form input:focus { border-color: var(--accent-2); }
+  .form-note { margin-top: 18px; font-size: 12px; letter-spacing: 0.5px; color: #8E867F; }
+
+  /* =========================== FOOTER =========================== */
+  footer.foot { background: var(--inverse); color: #fff; border-top: 1px solid #2C2620; }
+  .foot-row { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-top: 34px; padding-bottom: 34px; flex-wrap: wrap; }
+  .foot-brand { font-family: var(--display); font-weight: 500; font-size: 18px; }
+  .foot-meta { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #8E867F; }
+
+  /* =========================== RESPONSIVE =========================== */
+  @media (max-width: 760px) {
+    .deco { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 64px 1fr; }
+    .step-num { font-size: 40px; }
+    .form { flex-direction: column; }
+    .form .btn { width: 100%; }
+    .nav-by { display: none; }
+    .nav .btn-ghost { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================== NAV =========================== -->
+<header class="site">
+  <div class="wrap nav">
+    <div class="nav-l">
+      <span class="nav-mark"></span>
+      <span class="nav-logo">Skill&nbsp;Bill</span>
+      <span class="nav-by">/ by 2FRESH</span>
+    </div>
+    <div class="nav-r">
+      <div class="lang">
+        <a class="lang-link" href="cz.html">CZ</a>
+        <span class="lang-sep">/</span>
+        <span class="lang-active">EN</span>
+      </div>
+      <a href="#early" class="btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<!-- =========================== HERO =========================== -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="eyebrow hero-eyebrow rise d1">For designers who don't want to stand still</div>
+    <h1 class="display rise d2">You've designed for years. But do you know <em>where to go</em> now that everything's changing?</h1>
+    <p class="hero-sub rise d3">Skill&nbsp;Bill helps you get your bearings: where you really stand today, where your blind spots are, and what your next step is.</p>
+    <div class="hero-actions rise d4">
+      <a href="#how" class="btn">How it works <span class="arr">→</span></a>
+      <a href="#early" class="btn-ghost">Count me in</a>
+    </div>
+  </div>
+  <!-- dekorativní motiv (rozházené obdélníky) -->
+  <div class="deco">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+</section>
+
+<!-- =========================== HOW IT WORKS =========================== -->
+<section class="block tint" id="how">
+  <div class="wrap">
+    <div class="eyebrow sec-label" style="color: var(--accent);">How it works</div>
+    <h2 class="display sec-title">Four steps. From “I don't know where I stand” to a clear plan for what's next.</h2>
+
+    <div class="steps">
+      <!-- step 1 — assessment (entry examination) -->
+      <div class="step">
+        <div class="step-num c1">01</div>
+        <div>
+          <div class="step-h">You go through a structured assessment.</div>
+          <div class="step-d">No five-minute quiz. We guide you through a thought-out process that honestly maps where you stand as a designer, and you tell us where you'd like to go.</div>
+        </div>
+      </div>
+      <!-- step 2 — evaluation based on the assessment -->
+      <div class="step">
+        <div class="step-num c2">02</div>
+        <div>
+          <div class="step-h">You get an honest read on where you really stand.</div>
+          <div class="step-d">Based on the assessment: your strengths, your blind spots, and your position against the market. Concrete, no sugar-coating. Not a school grade.</div>
+        </div>
+      </div>
+      <!-- step 3 — plan for what's next (the prescription) -->
+      <div class="step">
+        <div class="step-num c3">03</div>
+        <div>
+          <div class="step-h">We put together a plan for what's next.</div>
+          <div class="step-d">What to learn, which projects to take on, what to change. Not a single piece of advice, but a whole path to get you where you're headed.</div>
+        </div>
+      </div>
+      <!-- step 4 — ongoing guidance along the way -->
+      <div class="step">
+        <div class="step-num c4">04</div>
+        <div>
+          <div class="step-h">We guide you along the way.</div>
+          <div class="step-d">We meet regularly, give you feedback on how you're doing, and adjust the plan as you progress. Not a one-off test, but a guide that sticks around.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== WHO'S BEHIND IT =========================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="eyebrow sec-label" style="color: var(--accent-3);">Who's behind it</div>
+    <div class="about-grid">
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-n c1">20</div>
+          <div class="stat-l">years of practice</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n c3">50</div>
+          <div class="stat-l">people on the team</div>
+        </div>
+      </div>
+      <div class="about-body">
+        <p>We're 2FRESH, a Prague-based design agency. We're building Skill&nbsp;Bill because we need it ourselves.</p>
+        <p>What Skill&nbsp;Bill is built on, we've been using ourselves for years, with our own designers and with our clients, and it works for us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== WHO IT'S FOR =========================== -->
+<section class="block tint">
+  <div class="wrap">
+    <div class="eyebrow sec-label" style="color: var(--accent);">Who it's for</div>
+    <h2 class="display sec-title">You might recognize yourself.</h2>
+
+    <div class="whom-list">
+      <div class="whom-item">
+        <span class="whom-mark">→</span>
+        <span class="whom-text">You've designed for a few years and feel the field shifting under your hands.</span>
+      </div>
+      <div class="whom-item">
+        <span class="whom-mark">→</span>
+        <span class="whom-text">You keep learning, but you're missing a direction for what comes next.</span>
+      </div>
+      <div class="whom-item">
+        <span class="whom-mark">→</span>
+        <span class="whom-text">You want to know where you stand against the market, not just against your teammates.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== FINAL / SOFT CTA =========================== -->
+<section class="block final" id="early">
+  <div class="wrap">
+    <div class="eyebrow">Early access</div>
+    <h2 class="display">Skill&nbsp;Bill is being built right now. Want to be there when we launch?</h2>
+    <p class="lead">Leave us your email and we'll let you know the moment Skill&nbsp;Bill is ready.</p>
+    <form class="form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('input').placeholder='Thanks! We will be in touch. (not wired yet)';">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit" class="btn btn-light">Count me in <span class="arr">→</span></button>
+    </form>
+    <div class="form-note">We'll let you know. No spam, no commitment.</div>
+  </div>
+</section>
+
+<!-- =========================== FOOTER =========================== -->
+<footer class="foot">
+  <div class="wrap foot-row">
+    <span class="foot-brand">Skill&nbsp;Bill</span>
+    <span class="foot-meta">© 2026 2FRESH s.r.o. · Prague</span>
+  </div>
+</footer>
+
+</body>
+</html>

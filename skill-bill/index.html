@@ -23,6 +23,9 @@
   .card-d { font-size: 13px; color: #4A4642; line-height: 1.6; }
   .card-meta { display: flex; gap: 12px; margin-top: 16px; font-size: 11px; color: #8E867F; letter-spacing: 0.5px; }
   .card-meta span { padding: 4px 10px; background: #F2EDE4; border-radius: 99px; }
+  .group-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #161413; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .group-label::after { content: ""; flex: 1; height: 1px; background: #E5DFD7; }
+  .group-label.muted { color: #8E867F; margin-top: 44px; }
   footer { margin-top: 56px; font-size: 12px; color: #8E867F; letter-spacing: 0.3px; line-height: 1.6; }
   .footer-divider { width: 60px; height: 1px; background: #E5DFD7; margin-bottom: 16px; }
   @media (max-width: 640px) {
@@ -34,8 +37,24 @@
 <body>
 <div class="wrap">
   <div class="eyebrow">Skill Bill · Landing page variants</div>
-  <h1>Four variants for A/B testing.</h1>
-  <p class="lede">Two narrative frames (development vs. validation), each in Czech and English. Use the language switch in the header to jump between mutations. Forms are placeholders — backend not wired yet.</p>
+  <h1>Skill Bill landing page variants.</h1>
+  <p class="lede">V3 is the current version, built for the usefulness test: a comprehension artifact, no pricing or scarcity. V1 and V2 below are the earlier A/B conversion drafts, kept for reference. Use the language switch in each page's header to jump between CZ and EN. Forms are placeholders, backend not wired yet.</p>
+  <div class="group-label">Aktuální verze · test užitečnosti</div>
+  <div class="grid">
+    <a class="card" href="v3/cz.html">
+      <div class="card-tag">V3 · CZ</div>
+      <div class="card-h">Designuješ roky. Ale víš, kam směřovat?</div>
+      <div class="card-d">Test užitečnosti, ne konverze. Bez ceny a scarcity. Prodává assessment a průběžné vedení. Brána „relevance v měnícím se oboru".</div>
+      <div class="card-meta"><span>Test užitečnosti</span><span>Bez ceny</span><span>CZ</span></div>
+    </a>
+    <a class="card" href="v3/en.html">
+      <div class="card-tag">V3 · EN</div>
+      <div class="card-h">You've designed for years. But do you know where to go?</div>
+      <div class="card-d">Usefulness test, not conversion. No price, no scarcity. Sells the assessment and ongoing guidance.</div>
+      <div class="card-meta"><span>Usefulness test</span><span>No price</span><span>EN</span></div>
+    </a>
+  </div>
+  <div class="group-label muted">Dřívější A/B drafty</div>
   <div class="grid">
     <a class="card" href="v1-cz.html">
       <div class="card-tag">V1 · CZ</div>
