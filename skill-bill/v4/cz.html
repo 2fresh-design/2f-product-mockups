@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Bill — víš, kam směřovat?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #FF77AA;
+    --accent-soft: rgba(255, 119, 170, 0.10);
+    --ink: #0A0A0A;
+    --ink-heading: #181818;
+    --muted: #737373;
+    --line: #E5E5E5;
+    --hairline: #F0F0F0;
+    --bg-alt: #F5F5F5;
+    --sans: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); color: var(--ink); background: #fff; -webkit-font-smoothing: antialiased; }
+  a { text-decoration: none; color: inherit; }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+
+  /* Nav */
+  .nav { border-bottom: 1px solid var(--line); }
+  .nav-in { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; }
+  .brand { display: flex; align-items: center; gap: 8px; }
+  .mark { width: 22px; height: 22px; border-radius: 999px; background: var(--accent); display: flex; align-items: center; justify-content: center; }
+  .mark::after { content: ''; width: 11px; height: 11px; border-radius: 999px; border: 2.5px solid var(--ink); }
+  .wordmark { font-size: 15px; font-weight: 600; letter-spacing: -0.2px; }
+  .byline { font-family: var(--mono); font-size: 10px; letter-spacing: 1px; color: var(--muted); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .lang { display: flex; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.6px; }
+  .lang .on { color: var(--ink); }
+  .lang .off { color: var(--muted); }
+  .lang .slash { color: var(--line); font-weight: 400; }
+  .contact { font-size: 12px; font-weight: 600; letter-spacing: 0.6px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; transition: border-color .2s; }
+  .contact:hover { border-color: var(--ink); }
+
+  /* Sections */
+  .section { padding: 80px; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: var(--accent); text-transform: uppercase; }
+  .kicker { display: flex; align-items: center; gap: 10px; max-width: 100%; }
+  .kicker::before { content: ''; width: 20px; height: 2px; background: var(--accent); flex-shrink: 0; }
+  .kicker .eyebrow { min-width: 0; }
+  .heading { font-size: 28px; line-height: 34px; font-weight: 600; letter-spacing: -1.1px; color: var(--ink-heading); max-width: 560px; margin-top: 12px; }
+
+  /* Hero */
+  .hero { display: flex; gap: 48px; align-items: flex-start; padding: 80px; }
+  .hero-left { flex: 1; display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+  .hero h1 { font-size: 40px; line-height: 46px; font-weight: 600; letter-spacing: -1.7px; color: var(--ink-heading); max-width: 560px; }
+  .hero h1 .accent { color: var(--accent); }
+  .lead { font-size: 15px; line-height: 26px; color: var(--muted); max-width: 460px; }
+  .actions { display: flex; gap: 12px; padding-top: 8px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 500; font-family: inherit; border: none; cursor: pointer; transition: transform .15s, filter .15s; }
+  .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-dark { background: var(--ink); color: #fff; }
+  .btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .btn-outline:hover { filter: none; border-color: var(--ink); }
+  .btn-brand { background: var(--accent); color: var(--ink); }
+  .arr { display: inline-flex; transition: transform .2s; }
+  .btn:hover .arr { transform: translateX(3px); }
+
+  /* Decor blocks */
+  .decor { width: 264px; height: 230px; position: relative; flex-shrink: 0; }
+  .decor div { position: absolute; border-radius: 12px; }
+  .d1 { width: 64px; height: 44px; left: 0; top: 0; background: var(--accent-soft); }
+  .d2 { width: 56px; height: 56px; left: 80px; top: 10px; background: var(--bg-alt); }
+  .d3 { width: 72px; height: 38px; left: 152px; top: 0; background: var(--accent-soft); }
+  .d4 { width: 84px; height: 52px; left: 16px; top: 60px; background: var(--bg-alt); }
+  .d5 { width: 60px; height: 60px; left: 116px; top: 80px; background: var(--accent); opacity: 0.32; }
+  .d6 { width: 48px; height: 76px; left: 192px; top: 52px; background: var(--bg-alt); }
+  .d7 { width: 92px; height: 42px; left: 52px; top: 128px; background: var(--accent-soft); }
+  .d8 { width: 76px; height: 52px; left: 164px; top: 144px; background: var(--accent); opacity: 0.18; }
+
+  /* Steps */
+  .steps { max-width: 641px; margin-top: 48px; }
+  .step { display: flex; gap: 32px; padding: 24px 0; border-top: 1px solid var(--hairline); }
+  .step-num { font-family: var(--mono); font-size: 22px; font-weight: 600; letter-spacing: -0.5px; color: var(--accent); width: 56px; flex-shrink: 0; }
+  .step-title { font-size: 16px; font-weight: 600; }
+  .step-desc { font-size: 14px; line-height: 23px; color: var(--muted); margin-top: 6px; }
+
+  /* Who's behind it */
+  .behind { display: flex; gap: 64px; align-items: flex-start; margin-top: 32px; }
+  .stats { display: flex; gap: 32px; flex-shrink: 0; }
+  .stat { border-left: 2px solid var(--accent); padding-left: 20px; }
+  .stat-value { font-size: 40px; line-height: 44px; font-weight: 600; letter-spacing: -1.8px; color: var(--accent); }
+  .stat-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.8px; color: var(--muted); margin-top: 4px; }
+  .behind-text { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+  .behind-lead { font-size: 17px; line-height: 26px; font-weight: 600; }
+  .behind-body { font-size: 14px; line-height: 24px; color: var(--muted); }
+
+  /* Bullets */
+  .bullets { max-width: 760px; margin-top: 32px; }
+  .bullet { display: flex; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--hairline); align-items: flex-start; }
+  .bullet svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 4px; }
+  .bullet-text { font-size: 15px; line-height: 24px; flex: 1; }
+
+  /* Early Access */
+  .cta { background: var(--ink); color: #fff; }
+  .cta .heading { color: #fff; font-size: 32px; line-height: 38px; letter-spacing: -1.3px; margin-top: 24px; }
+  .cta .lead { color: rgba(255,255,255,0.55); margin-top: 24px; }
+  .form { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+  .form input { width: 280px; padding: 14px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); color: #fff; font-family: var(--mono); font-size: 13px; outline: none; transition: border-color .2s; }
+  .form input::placeholder { color: rgba(255,255,255,0.35); }
+  .form input:focus { border-color: var(--accent); }
+  .disclaimer { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 24px; }
+
+  /* Footer */
+  .footer { border-top: 1px solid var(--line); }
+  .footer-in { display: flex; justify-content: space-between; align-items: center; padding: 24px; gap: 24px; }
+  .footer .wordmark { font-size: 13px; letter-spacing: -0.1px; }
+  .copyright { font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .section, .hero { padding: 56px 24px; }
+    .decor { display: none; }
+    .behind { flex-direction: column; gap: 32px; }
+  }
+  @media (max-width: 560px) {
+    .hero h1 { font-size: 32px; line-height: 38px; letter-spacing: -1.2px; }
+    .step { gap: 20px; }
+    .form input { width: 100%; }
+    .form .btn { width: 100%; justify-content: center; }
+    .nav-in { flex-wrap: wrap; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <div class="brand">
+      <div class="mark"></div>
+      <span class="wordmark">Skill Bill</span>
+      <span class="byline">/ BY 2FRESH</span>
+    </div>
+    <div class="nav-right">
+      <div class="lang">
+        <span class="on">CZ</span>
+        <span class="slash">/</span>
+        <a class="off" href="en.html">EN</a>
+      </div>
+      <a class="contact" href="#early-access">Ozvi se</a>
+    </div>
+  </div>
+</nav>
+
+<header class="wrap hero">
+  <div class="hero-left">
+    <div class="kicker"><span class="eyebrow">Pro designery, kteří nechtějí zůstat stát</span></div>
+    <h1>Designuješ roky. Ale víš, <span class="accent">kam směřovat teď,</span> když se všechno mění?</h1>
+    <p class="lead">Skill Bill ti pomůže zorientovat se v tom, kde dnes reálně stojíš, kde máš slepá místa a jaký je tvůj další krok.</p>
+    <div class="actions">
+      <a class="btn btn-dark" href="#jak-to-funguje"><span class="arr">→</span> Jak to funguje</a>
+      <a class="btn btn-outline" href="#early-access">Chci být u toho</a>
+    </div>
+  </div>
+  <div class="decor" aria-hidden="true">
+    <div class="d1"></div><div class="d2"></div><div class="d3"></div><div class="d4"></div>
+    <div class="d5"></div><div class="d6"></div><div class="d7"></div><div class="d8"></div>
+  </div>
+</header>
+
+<section class="section" id="jak-to-funguje" style="background: var(--bg-alt);">
+  <div class="wrap">
+    <div class="eyebrow">Jak to funguje</div>
+    <h2 class="heading">Čtyři kroky. Od „nevím, kde jsem" k jasnému plánu, jak dál.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <div class="step-title">Projdeš strukturovaným assessmentem.</div>
+          <div class="step-desc">Žádný kvíz na pět minut. Promyšleným postupem tě provedeme tak, abychom poctivě zmapovali, kde jako designer stojíš, a ty nám řekneš, kam bys chtěl mířit.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <div class="step-title">Dostaneš zhodnocení, kde reálně stojíš.</div>
+          <div class="step-desc">Na základě assessmentu: silné stránky, slepá místa a tvoje pozice vůči trhu. Konkrétně a bez příkras. Ne známka jako ve škole.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <div class="step-title">Dáme dohromady plán dalšího postupu.</div>
+          <div class="step-desc">Co se učit, jaké projekty brát, co změnit. Ne jedna rada do větru, ale celý postup, jak se dostat tam, kam míříš.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div>
+          <div class="step-title">Vedeme tě po té cestě.</div>
+          <div class="step-desc">Scházíme se průběžně, dáváme ti zpětnou vazbu, jak se ti daří, a plán ladíme podle toho, jak se posouváš. Ne jednorázový test, ale průvodce, který u toho zůstává.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Kdo za tím stojí</div>
+    <div class="behind">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">20</div>
+          <div class="stat-label">LET PRAXE</div>
+        </div>
+      </div>
+      <div class="behind-text">
+        <p class="behind-lead">Jsme 2FRESH, pražská designová agentura. Skill Bill stavíme proto, že ho sami potřebujeme.</p>
+        <p class="behind-body">To, z čeho Skill Bill vychází, sami používáme už roky, se svými designéry i s klienty, a funguje nám to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--bg-alt);">
+  <div class="wrap">
+    <div class="eyebrow">Pro koho to je</div>
+    <h2 class="heading">Možná se v tom poznáš.</h2>
+    <div class="bullets">
+      <div class="bullet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FF77AA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <div class="bullet-text">Designuješ pár let a cítíš, že se obor mění pod rukama.</div>
+      </div>
+      <div class="bullet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FF77AA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <div class="bullet-text">Učíš se, ale chybí ti směr, co dál.</div>
+      </div>
+      <div class="bullet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FF77AA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <div class="bullet-text">Chceš vědět, jak jsi na tom proti trhu, ne jen proti kolegům v týmu.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section cta" id="early-access">
+  <div class="wrap">
+    <div class="eyebrow">Early Access</div>
+    <h2 class="heading">Skill Bill právě vzniká.<br>Chceš být u toho, až ho spustíme?</h2>
+    <p class="lead">Necháš nám e-mail, my ti dáme vědět, jakmile bude Skill Bill připravený.</p>
+    <form class="form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('input').placeholder='Díky! Dáme ti vědět.';">
+      <input type="email" required placeholder="tvuj@email.cz" aria-label="Tvůj e-mail">
+      <button type="submit" class="btn btn-brand"><span class="arr">→</span> Chci být u toho</button>
+    </form>
+    <p class="disclaimer">Dáme ti vědět. Žádný spam, žádný závazek.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer-in">
+    <div class="brand">
+      <div class="mark"></div>
+      <span class="wordmark">Skill Bill</span>
+    </div>
+    <div class="copyright">© 2026 2FRESH s.r.o. · Praha</div>
+  </div>
+</footer>
+
+</body>
+</html>
